@@ -9,36 +9,36 @@ export const ModalContainer = styled.View`
 `;
 
 export const ModalContent = styled.View`
+  background-color: ${colors.white};
+  border-top-right-radius: 40px;
+  border-top-left-radius: 40px;
+  padding: 16px;
   width: 100%;
   height: 70%;
-  background-color: ${colors.white};
-  padding: 16px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
 `;
 
 export const CloseIcon = styled.Image`
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 35px;
   height: 35px;
-  background-color: ${colors.background};
-  border-radius: 35px;
+  width: 35px;
+  right: 0;
+  top: 0;
 `;
 
 export const TextInputWithBorderBottom = styled.TextInput`
-  border-bottom-width: 0.5px;
   border-color: ${colors.primary.s100};
+  font-family: 'Poppins-ExtraLight';
+  border-bottom-width: 0.5px;
   padding-left: 10px;
+  margin-top: 20px;
   font-size: 18px;
   opacity: 0.6;
-  margin-top: 30px;
 `;
 
 export const TextAreaWithBorder = styled.TextInput`
   border-color: ${colors.primary.s100};
   background-color: ${colors.grey.s100};
+  font-family: 'Poppins-ExtraLight';
   text-align-vertical: top;
   padding-left: 10px;
   margin-top: 40px;

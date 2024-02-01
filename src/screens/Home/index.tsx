@@ -1,24 +1,21 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CreateGroupModal from '../../components/CreateGroupModal';
 import InitialButton from '../../components/InitialButton';
 import {ButtonContainer, Container, Logo} from './styles';
+import {RootStackParamList} from '../../navigation/types';
 import SearchInput from '../../components/SearchInput';
 import {icons} from '../../components/icons';
 import colors from '../../styles/colors';
-import {Alert} from 'react-native';
+import useHome from './hook/useHome';
 import {imgs} from '../imgs';
-import React, {useState} from 'react';
+import React from 'react';
 
-const Home = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-  const handlePress = () => {
-    setModalVisible(true);
-  };
-
-  const onClose = () => {
-    console.log('Modal fechado');
-    setModalVisible(false);
-  };
+const Home: React.FC<Props> = ({navigation}) => {
+  const {modalVisible, handlePress, onClose, goNewRecording} = useHome({
+    navigation,
+  });
 
   return (
     <Container>
@@ -34,7 +31,7 @@ const Home = () => {
 
         <InitialButton
           icon={icons.micRecordIcon}
-          onPress={() => Alert.alert('Clicou')}
+          onPress={goNewRecording}
           backgroundColor={colors.red}
         />
       </ButtonContainer>

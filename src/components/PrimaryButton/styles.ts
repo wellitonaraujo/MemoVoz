@@ -11,7 +11,7 @@ export const ButtonContainer = styled(TouchableOpacity)<{
   border-radius: 8px;
   margin-top: 20px;
   justify-content: center;
-  border-color: ${({borderColor}) => borderColor || colors.grey.s300};
+  border-color: ${({borderColor}) => borderColor || colors.grey.s100};
   border-width: 1px;
   background-color: ${({backgroundColor}) =>
     backgroundColor || colors.primary.s200};
@@ -19,6 +19,7 @@ export const ButtonContainer = styled(TouchableOpacity)<{
 
 export const ButtonText = styled.Text<{textColor?: string}>`
   color: ${({textColor}) => textColor || colors.white};
+  font-family: 'Poppins-Regular';
   text-align: center;
   font-size: 20px;
 `;

@@ -1,14 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react';
+import {imgs} from '../imgs';
+import {Container, Logo} from './styles';
+import {Text} from 'react-native';
 
 const NewRecording = () => {
+  const [text, setText] = useState<string>(
+    'Toque no botão abaixo para começar',
+  );
+
+  const changeText = () => {
+    setText('Gravando...');
+  };
+
   return (
-    <View>
-      <Text>NewRecording</Text>
-    </View>
-  )
-}
+    <Container>
+      <Logo source={imgs.logo} />
+      <Text onPress={changeText}>{text}</Text>
+    </Container>
+  );
+};
 
-export default NewRecording
-
-const styles = StyleSheet.create({})
+export default NewRecording;
