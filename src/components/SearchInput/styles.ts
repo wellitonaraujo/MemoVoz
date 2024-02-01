@@ -10,7 +10,7 @@ export const Container = styled.View`
   margin-top: ${screenHeight * 0.02}px;
   flex-direction: row;
   align-items: center;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 30px;
   padding: 0 10px;
   width: 100%;

@@ -16,6 +16,12 @@ const useHome = ({navigation}: UseHomeProps) => {
     setGroupCards([...groupCards, groupCard]);
   };
 
+  const deleteGroupCard = (index: number) => {
+    const updatedGroupCards = [...groupCards];
+    updatedGroupCards.splice(index, 1);
+    setGroupCards(updatedGroupCards);
+  };
+
   const handlePress = () => {
     setModalVisible(true);
   };
@@ -36,6 +42,7 @@ const useHome = ({navigation}: UseHomeProps) => {
     goNewRecording,
     groupCards,
     addGroupCard,
+    deleteGroupCard,
   };
 };
 
