@@ -9,18 +9,35 @@ import colors from '../../styles/colors';
 import useHome from './hook/useHome';
 import {imgs} from '../imgs';
 import React from 'react';
+import GroupCard from '../../components/GroupCard';
+import {ScrollView} from 'react-native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const Home: React.FC<Props> = ({navigation}) => {
-  const {modalVisible, handlePress, onClose, goNewRecording} = useHome({
+  const {
+    modalVisible,
+    handlePress,
+    onClose,
+    goNewRecording,
+    groupCards,
+    addGroupCard,
+  } = useHome({
     navigation,
   });
+
+  const hasGroupCards = groupCards.length > 0;
 
   return (
     <Container>
       <SearchInput placeholder="Buscar Grupo..." />
-      <Logo source={imgs.logo} />
+      {!hasGroupCards && <Logo source={imgs.logo} />}
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {groupCards.map((groupCard, index) => (
+          <GroupCard key={index} {...groupCard} />
+        ))}
+      </ScrollView>
 
       <ButtonContainer>
         <InitialButton
@@ -36,7 +53,11 @@ const Home: React.FC<Props> = ({navigation}) => {
         />
       </ButtonContainer>
 
-      <CreateGroupModal visible={modalVisible} onClose={onClose} />
+      <CreateGroupModal
+        visible={modalVisible}
+        onClose={onClose}
+        addGroupCard={addGroupCard}
+      />
     </Container>
   );
 };

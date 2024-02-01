@@ -1,4 +1,4 @@
-import {ButtonContainer} from '../../screens/Home/styles';
+import useCreateGroup from './hook/useCreateGroup';
 import {Pressable, Modal} from 'react-native';
 import PrimaryButton from '../PrimaryButton';
 import colors from '../../styles/colors';
@@ -10,17 +10,27 @@ import {
   ModalContainer,
   ModalContent,
   CloseIcon,
+  ButtonsContainer,
 } from './styles';
 
 interface CreateGroupModalProps {
   visible: boolean;
   onClose: () => void;
+  addGroupCard: (groupCard: {name: string; description: string}) => void;
 }
 
 const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
   visible,
   onClose,
+  addGroupCard,
 }) => {
+  const {
+    groupName,
+    groupDescription,
+    handleSave,
+    setGroupName,
+    setGroupDescription,
+  } = useCreateGroup({onClose, addGroupCard});
   return (
     <Modal
       animationType="slide"
@@ -32,20 +42,26 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
           <Pressable onPress={onClose}>
             <CloseIcon source={icons.closeicon} />
           </Pressable>
-          <TextInputWithBorderBottom placeholder="Nome do grupo" />
+          <TextInputWithBorderBottom
+            placeholder="Nome do grupo"
+            value={groupName}
+            onChangeText={setGroupName}
+          />
           <TextAreaWithBorder
             placeholder="Descrição do grupo"
             multiline={false}
+            value={groupDescription}
+            onChangeText={setGroupDescription}
           />
-          <ButtonContainer>
-            <PrimaryButton title="Salvar" onPress={() => console.log('')} />
+          <ButtonsContainer>
+            <PrimaryButton title="Salvar" onPress={handleSave} />
             <PrimaryButton
               title="Cancelar"
               backgroundColor={colors.grey.s100}
               textColor={colors.primary.s200}
               onPress={onClose}
             />
-          </ButtonContainer>
+          </ButtonsContainer>
         </ModalContent>
       </ModalContainer>
     </Modal>

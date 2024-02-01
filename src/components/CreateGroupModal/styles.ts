@@ -12,7 +12,7 @@ export const ModalContent = styled.View`
   background-color: ${colors.white};
   border-top-right-radius: 40px;
   border-top-left-radius: 40px;
-  padding: 16px;
+  padding: 20px;
   width: 100%;
   height: 70%;
 `;
@@ -49,6 +49,5 @@ export const TextAreaWithBorder = styled.TextInput`
 `;
 
 export const ButtonsContainer = styled.View`
-  flex: 1;
-  flex-direction: row;
+  margin-top: 40px;
 `;

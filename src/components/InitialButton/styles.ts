@@ -1,5 +1,5 @@
-import { Dimensions, Image, Platform } from "react-native";
-import styled from "styled-components/native";
+import {Dimensions, Image, Platform} from 'react-native';
+import styled from 'styled-components/native';
 
 interface CreateGroupProps {
   backgroundColor?: string;
@@ -19,12 +19,12 @@ export const CreateGroup = styled.TouchableOpacity<CreateGroupProps>`
   align-items: center;
   align-self: flex-end;
   margin-top: ${marginTop}px;
-  ${Platform.OS === 'android' ? 'elevation: 5;' : 
-  'shadow-color: #000; shadow-offset: 0px 2px; shadow-opacity: 0.23; shadow-radius: 2.62px;'}
+  ${Platform.OS === 'android'
+    ? 'elevation: 5;'
+    : 'shadow-color: #000; shadow-offset: 0px 2px; shadow-opacity: 0.23; shadow-radius: 2.62px;'}
 `;
 
 export const Icon = styled(Image)`
   width: ${iconSize}px;
   height: ${iconSize}px;
-
 `;

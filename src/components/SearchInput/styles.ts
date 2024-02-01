@@ -10,10 +10,11 @@ export const Container = styled.View`
   margin-top: ${screenHeight * 0.02}px;
   flex-direction: row;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 15px;
   font-size: 30px;
   padding: 0 10px;
   width: 100%;
+  margin-bottom: 30px;
 `;
 
 export const StyledInput = styled(TextInput)`
