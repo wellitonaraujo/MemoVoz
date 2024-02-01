@@ -1,20 +1,15 @@
 import React from 'react';
-import {
-  Container,
-  Description,
-  InfoContainer,
-  Title,
-  TitleCard,
-} from './styles';
+import {Container, Description, Title, TitleCard} from './styles';
 
 interface GroupCardProps {
   name: string;
   description: string;
+  onDelete: () => void;
 }
 
-const GroupCard: React.FC<GroupCardProps> = ({name, description}) => {
+const GroupCard: React.FC<GroupCardProps> = ({name, description, onDelete}) => {
   return (
-    <Container>
+    <Container onPress={onDelete}>
       <TitleCard>
         <Title>{name}</Title>
       </TitleCard>
