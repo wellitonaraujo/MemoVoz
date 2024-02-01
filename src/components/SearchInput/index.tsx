@@ -1,19 +1,30 @@
 import {SearchInputProps} from '../../models/SearchInputProps';
-import {Alert, TouchableOpacity} from 'react-native';
 import {Container, SearchIcon, StyledInput} from './styles';
+import {TouchableOpacity} from 'react-native';
 import colors from '../../styles/colors';
+import React, {useState} from 'react';
 import {icons} from '../icons';
-import React from 'react';
 
-const SearchInput: React.FC<SearchInputProps> = ({placeholder, ...rest}) => {
+const SearchInput: React.FC<SearchInputProps> = ({placeholder, onSearch}) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchTerm);
+  };
+
   return (
     <Container>
       <StyledInput
-        {...rest}
         placeholder={placeholder}
         placeholderTextColor={colors.grey.s200}
+        value={searchTerm}
+        onChangeText={text => {
+          setSearchTerm(text);
+          onSearch(text);
+        }}
+        onSubmitEditing={handleSearch}
       />
-      <TouchableOpacity onPress={() => Alert.alert('pão de batata')}>
+      <TouchableOpacity onPress={handleSearch}>
         <SearchIcon source={icons.searchIcon} />
       </TouchableOpacity>
     </Container>
