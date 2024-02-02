@@ -65,7 +65,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
             <PrimaryButton
               title="Cancelar"
               backgroundColor={colors.grey.s100}
-              textColor={colors.primary.s200}
+              textColor={colors.primary.s300}
               onPress={onClose}
             />
           </ButtonsContainer>

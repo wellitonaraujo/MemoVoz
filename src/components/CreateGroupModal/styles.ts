@@ -27,23 +27,26 @@ export const CloseIcon = styled.Image`
 
 export const TextInputWithBorderBottom = styled.TextInput`
   border-color: ${colors.primary.s100};
+  border-color: ${colors.primary.s100};
+  background-color: ${colors.grey.s100};
   font-family: 'Poppins-ExtraLight';
   border-width: 1px;
   padding-left: 10px;
   margin-top: 50px;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 16px;
   opacity: 0.6;
 `;
 
 export const TextAreaWithBorder = styled.TextInput`
   border-color: ${colors.primary.s100};
   background-color: ${colors.grey.s100};
+  border-width: 1px;
   font-family: 'Poppins-ExtraLight';
   text-align-vertical: top;
   padding-left: 10px;
   margin-top: 40px;
-  font-size: 18px;
+  font-size: 16px;
   opacity: 0.6;
   height: 200px;
   border-radius: 6px;

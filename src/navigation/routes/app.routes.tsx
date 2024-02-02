@@ -4,6 +4,7 @@ import NewRecording from '../../screens/NewRecording';
 import {RootStackParamList} from '../types';
 import Home from '../../screens/Home';
 import React from 'react';
+import GroupDetails from '../../screens/GroupDetails';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -17,6 +18,7 @@ const AppRoutes: React.FC = () => (
       }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="NewRecording" component={NewRecording} />
+      <Stack.Screen name="GroupDetails" component={GroupDetails} />
     </Stack.Navigator>
   </NavigationContainer>
 );

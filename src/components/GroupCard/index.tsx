@@ -9,21 +9,29 @@ import {
   TitleCard,
 } from './styles';
 import {icons} from '../icons';
+import {useNavigation} from '@react-navigation/native';
 
 interface GroupCardProps {
   name: string;
   description: string;
-  onDelete: () => void;
 }
 
-const GroupCard: React.FC<GroupCardProps> = ({name, description, onDelete}) => {
+const GroupCard: React.FC<GroupCardProps> = ({name, description}) => {
   const truncatedDescription =
-    description.length > 40
-      ? description.substring(0, 37) + '...'
+    description.length > 27
+      ? description.substring(0, 30) + '...'
       : description;
 
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate('GroupDetails', {
+      name,
+      description,
+    });
+  };
   return (
-    <Container onPress={onDelete}>
+    <Container onPress={handlePress}>
       <InfoContainer>
         <TitleCard>
           <Title>{name}</Title>

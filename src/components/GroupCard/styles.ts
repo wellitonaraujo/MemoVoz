@@ -3,7 +3,7 @@ import colors from '../../styles/colors';
 import {Platform} from 'react-native';
 
 export const Container = styled.Pressable`
-  background-color: ${colors.grey.s400};
+  background-color: ${colors.primary.s100};
   flex-direction: row;
   align-items: center;
   border-radius: 15px;
@@ -35,7 +35,8 @@ export const Description = styled.Text`
   font-size: 15px;
   font-family: 'Poppins-ExtraLight';
   color: ${colors.grey.s300};
-  padding: 10px 20px;
+  padding: 0 20px;
+  margin-bottom: 20px;
 `;
 
 export const IconContainer = styled.View`

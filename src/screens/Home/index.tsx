@@ -7,7 +7,7 @@ import SearchInput from '../../components/SearchInput';
 import GroupCard from '../../components/GroupCard';
 import {icons} from '../../components/icons';
 import colors from '../../styles/colors';
-import {ScrollView, Text} from 'react-native';
+import {ScrollView} from 'react-native';
 import useHome from './hook/useHome';
 import {imgs} from '../imgs';
 import React from 'react';
@@ -22,7 +22,6 @@ const Home: React.FC<Props> = ({navigation}) => {
     goNewRecording,
     groupCards,
     addGroupCard,
-    handleDelete,
     handleSearch,
     filteredGroupCards,
   } = useHome({
@@ -37,14 +36,10 @@ const Home: React.FC<Props> = ({navigation}) => {
       {!hasGroupCards && <Logo source={imgs.logo} />}
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* {hasGroupCards && <ListGroupTitle>Lista de Grupos</ListGroupTitle>} */}
+        {hasGroupCards && <ListGroupTitle>Grupos</ListGroupTitle>}
 
         {filteredGroupCards.map((groupCard, index) => (
-          <GroupCard
-            key={index}
-            {...groupCard}
-            onDelete={() => handleDelete(index)}
-          />
+          <GroupCard key={index} {...groupCard} />
         ))}
       </ScrollView>
 

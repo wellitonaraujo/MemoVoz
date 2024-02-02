@@ -1,9 +1,9 @@
 const colors = {
-  background: '#F8F8F8',
+  background: '#040D12',
   primary: {
     s300: '#242329',
-    s200: '#233441',
-    s100: '#495A67',
+    s200: '#93B1A6',
+    s100: '#183D3D',
   },
   grey: {
     s500: '#0c0d11',
@@ -26,12 +26,7 @@ const colors = {
     s100: '#F8D7DA',
   },
   inputBorder: {
-    s100: '#6c13cd',
-  },
-  warning: {
-    s300: '#F28000',
-    s200: '#E39402',
-    s100: '#FFE5CD',
+    s100: '#183D3D',
   },
 };
 

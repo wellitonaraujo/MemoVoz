@@ -14,11 +14,11 @@ export const ButtonContainer = styled(TouchableOpacity)<{
   border-color: ${({borderColor}) => borderColor || colors.grey.s100};
   border-width: 1px;
   background-color: ${({backgroundColor}) =>
-    backgroundColor || colors.grey.s500};
+    backgroundColor || colors.primary.s100};
 `;
 
 export const ButtonText = styled.Text<{textColor?: string}>`
-  color: ${({textColor}) => textColor || colors.grey.s100};
+  color: ${({textColor}) => textColor || colors.white};
   font-family: 'Poppins-Light';
   text-align: center;
   font-size: 17px;
