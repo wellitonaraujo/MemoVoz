@@ -1,14 +1,12 @@
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
-import {Dimensions, Image, Platform} from 'react-native';
-
-const screenHeight = Dimensions.get('window').height;
+import {Platform} from 'react-native';
 
 export const Container = styled.Pressable`
-  background-color: ${colors.primary.s100};
-  flex-direction: column;
+  background-color: ${colors.grey.s400};
+  flex-direction: row;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 10px;
   width: 100%;
   ${Platform.OS === 'android'
@@ -18,28 +16,33 @@ export const Container = styled.Pressable`
 `;
 
 export const InfoContainer = styled.View`
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  flex: 1;
 `;
 
 export const Title = styled.Text`
-  font-size: 19px;
+  font-size: 17px;
   font-family: 'Poppins-Regular';
   color: ${colors.grey.s200};
 `;
 
 export const TitleCard = styled.Text`
-  background-color: ${colors.primary.s200};
   color: ${colors.grey.s200};
-  border-radius: 6px;
-  padding: 5px 20px;
+  border-radius: 3px;
+  padding: 0 20px;
 `;
 
 export const Description = styled.Text`
-  font-size: 17px;
+  font-size: 15px;
   font-family: 'Poppins-ExtraLight';
   color: ${colors.grey.s300};
-  padding: 5px 0;
+  padding: 10px 20px;
+`;
+
+export const IconContainer = styled.View`
+  margin-left: 10px;
+`;
+
+export const ArronIcon = styled.Image`
+  width: 25px;
+  height: 25px;
 `;

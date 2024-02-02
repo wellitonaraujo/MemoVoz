@@ -1,5 +1,14 @@
 import React from 'react';
-import {Container, Description, Title, TitleCard} from './styles';
+import {
+  ArronIcon,
+  Container,
+  Description,
+  IconContainer,
+  InfoContainer,
+  Title,
+  TitleCard,
+} from './styles';
+import {icons} from '../icons';
 
 interface GroupCardProps {
   name: string;
@@ -8,12 +17,21 @@ interface GroupCardProps {
 }
 
 const GroupCard: React.FC<GroupCardProps> = ({name, description, onDelete}) => {
+  const truncatedDescription =
+    description.length > 40
+      ? description.substring(0, 37) + '...'
+      : description;
+
   return (
     <Container onPress={onDelete}>
-      <TitleCard>
-        <Title>{name}</Title>
-      </TitleCard>
-      <Description>{description}</Description>
+      <InfoContainer>
+        <TitleCard>
+          <Title>{name}</Title>
+        </TitleCard>
+        <Description>{truncatedDescription}</Description>
+      </InfoContainer>
+      <ArronIcon source={icons.arronicon} />
+      <IconContainer />
     </Container>
   );
 };

@@ -5,4 +5,5 @@ export const icons: Icons = {
   createGroupIcon: require('../assets/icons/iconadd.png'),
   micRecordIcon: require('../assets/icons/icon-mic-record.png'),
   closeicon: require('../assets/icons/closeicon.png'),
+  arronicon: require('../assets/icons/arronicon.png'),
 };

@@ -1,5 +1,5 @@
 import useCreateGroup from './hook/useCreateGroup';
-import {Pressable, Modal} from 'react-native';
+import {Pressable, Modal, Text} from 'react-native';
 import PrimaryButton from '../PrimaryButton';
 import colors from '../../styles/colors';
 import {icons} from '../icons';
@@ -11,6 +11,7 @@ import {
   ModalContent,
   CloseIcon,
   ButtonsContainer,
+  ErrorLength,
 } from './styles';
 
 interface CreateGroupModalProps {
@@ -46,7 +47,13 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
             placeholder="Nome do grupo"
             value={groupName}
             onChangeText={setGroupName}
+            maxLength={24}
           />
+          {groupName.length > 23 && (
+            <ErrorLength>
+              O nome do grupo não pode ter mais de 24 caracteres.
+            </ErrorLength>
+          )}
           <TextAreaWithBorder
             placeholder="Descrição do grupo"
             multiline={false}

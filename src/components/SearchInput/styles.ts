@@ -6,11 +6,11 @@ import {Dimensions, Image} from 'react-native';
 const screenHeight = Dimensions.get('window').height;
 
 export const Container = styled.View`
-  background-color: ${colors.primary.s100};
+  background-color: ${colors.grey.s400};
   margin-top: ${screenHeight * 0.02}px;
   flex-direction: row;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 50px;
   font-size: 30px;
   padding: 0 10px;
   width: 100%;

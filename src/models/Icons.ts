@@ -5,6 +5,7 @@ export interface Icons {
   createGroupIcon: ImageSourcePropType;
   micRecordIcon: ImageSourcePropType;
   closeicon: ImageSourcePropType;
+  arronicon: ImageSourcePropType;
 }
 
 export interface InitialButtonProps {

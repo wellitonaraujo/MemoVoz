@@ -4,7 +4,7 @@ import colors from '../../styles/colors';
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
-  background-color: ${colors.primary.s200};
+  background-color: ${colors.grey.s500};
   padding: 16px;
 `;
 

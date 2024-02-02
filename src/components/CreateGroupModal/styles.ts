@@ -10,8 +10,8 @@ export const ModalContainer = styled.View`
 
 export const ModalContent = styled.View`
   background-color: ${colors.white};
-  border-top-right-radius: 40px;
-  border-top-left-radius: 40px;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
   padding: 20px;
   width: 100%;
   height: 70%;
@@ -19,8 +19,8 @@ export const ModalContent = styled.View`
 
 export const CloseIcon = styled.Image`
   position: absolute;
-  height: 35px;
-  width: 35px;
+  height: 30px;
+  width: 30px;
   right: 0;
   top: 0;
 `;
@@ -28,9 +28,10 @@ export const CloseIcon = styled.Image`
 export const TextInputWithBorderBottom = styled.TextInput`
   border-color: ${colors.primary.s100};
   font-family: 'Poppins-ExtraLight';
-  border-bottom-width: 0.5px;
+  border-width: 1px;
   padding-left: 10px;
-  margin-top: 20px;
+  margin-top: 50px;
+  border-radius: 6px;
   font-size: 18px;
   opacity: 0.6;
 `;
@@ -49,5 +50,10 @@ export const TextAreaWithBorder = styled.TextInput`
 `;
 
 export const ButtonsContainer = styled.View`
-  margin-top: 40px;
+  margin-top: 10px;
+`;
+
+export const ErrorLength = styled.Text`
+  color: ${colors.error.s200};
+  font-size: 12px;
 `;

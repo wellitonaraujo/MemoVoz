@@ -16,7 +16,7 @@ const SearchInput: React.FC<SearchInputProps> = ({placeholder, onSearch}) => {
     <Container>
       <StyledInput
         placeholder={placeholder}
-        placeholderTextColor={colors.grey.s200}
+        placeholderTextColor={colors.grey.s300}
         value={searchTerm}
         onChangeText={text => {
           setSearchTerm(text);

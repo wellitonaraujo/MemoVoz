@@ -1,13 +1,13 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CreateGroupModal from '../../components/CreateGroupModal';
 import InitialButton from '../../components/InitialButton';
-import {ButtonContainer, Container, Logo} from './styles';
+import {ButtonContainer, Container, ListGroupTitle, Logo} from './styles';
 import {RootStackParamList} from '../../navigation/types';
 import SearchInput from '../../components/SearchInput';
 import GroupCard from '../../components/GroupCard';
 import {icons} from '../../components/icons';
 import colors from '../../styles/colors';
-import {ScrollView} from 'react-native';
+import {ScrollView, Text} from 'react-native';
 import useHome from './hook/useHome';
 import {imgs} from '../imgs';
 import React from 'react';
@@ -33,10 +33,12 @@ const Home: React.FC<Props> = ({navigation}) => {
 
   return (
     <Container>
-      <SearchInput placeholder="Buscar Grupo..." onSearch={handleSearch} />
+      <SearchInput placeholder="Buscar" onSearch={handleSearch} />
       {!hasGroupCards && <Logo source={imgs.logo} />}
 
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* {hasGroupCards && <ListGroupTitle>Lista de Grupos</ListGroupTitle>} */}
+
         {filteredGroupCards.map((groupCard, index) => (
           <GroupCard
             key={index}

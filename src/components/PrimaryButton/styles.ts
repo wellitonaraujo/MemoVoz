@@ -8,18 +8,18 @@ export const ButtonContainer = styled(TouchableOpacity)<{
 }>`
   height: 54px;
   width: 100%;
-  border-radius: 100px;
+  border-radius: 25px;
   margin-top: 20px;
   justify-content: center;
   border-color: ${({borderColor}) => borderColor || colors.grey.s100};
   border-width: 1px;
   background-color: ${({backgroundColor}) =>
-    backgroundColor || colors.primary.s200};
+    backgroundColor || colors.grey.s500};
 `;
 
 export const ButtonText = styled.Text<{textColor?: string}>`
-  color: ${({textColor}) => textColor || colors.white};
-  font-family: 'Poppins-Regular';
+  color: ${({textColor}) => textColor || colors.grey.s100};
+  font-family: 'Poppins-Light';
   text-align: center;
-  font-size: 20px;
+  font-size: 17px;
 `;
