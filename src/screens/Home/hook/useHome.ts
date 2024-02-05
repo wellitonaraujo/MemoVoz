@@ -58,6 +58,20 @@ const useHome = ({navigation}: UseHomeProps) => {
     saveGroupCards(updatedGroupCards);
   };
 
+  const editGroup = (
+    groupName: string,
+    updatedDetails: {name: string; description: string},
+  ) => {
+    const updatedGroupCards = groupCards.map(groupCard => {
+      if (groupCard.name === groupName) {
+        return {...groupCard, ...updatedDetails};
+      }
+      return groupCard;
+    });
+    setGroupCards(updatedGroupCards);
+    saveGroupCards(updatedGroupCards);
+  };
+
   const handleDelete = (index: number) => {
     Alert.alert(
       'Excluir Grupo',
@@ -112,6 +126,7 @@ const useHome = ({navigation}: UseHomeProps) => {
     handleDelete,
     filteredGroupCards,
     handleSearch,
+    editGroup,
     groupCards: groupCards.filter(groupCard =>
       groupCard.name.toLowerCase().includes(searchTerm.toLowerCase()),
     ),
