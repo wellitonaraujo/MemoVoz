@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import {Alert} from 'react-native';
 
 interface UseHomeProps {
-  navigation: any;
+  navigation?: any;
 }
 interface GroupCard {
   name: string;
@@ -60,8 +60,8 @@ const useHome = ({navigation}: UseHomeProps) => {
 
   const handleDelete = (index: number) => {
     Alert.alert(
-      'Excluir Card',
-      'Tem certeza de que deseja excluir este card?',
+      'Excluir Grupo',
+      'Tem certeza de que deseja excluir este Grupo?',
       [
         {
           text: 'Cancelar',
@@ -81,7 +81,6 @@ const useHome = ({navigation}: UseHomeProps) => {
   };
 
   const onClose = () => {
-    console.log('Modal fechado');
     setModalVisible(false);
   };
 

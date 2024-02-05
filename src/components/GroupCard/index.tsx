@@ -14,15 +14,16 @@ import {useNavigation} from '@react-navigation/native';
 interface GroupCardProps {
   name: string;
   description: string;
+  onDelete?: () => void;
 }
 
-const GroupCard: React.FC<GroupCardProps> = ({name, description}) => {
+const GroupCard: React.FC<GroupCardProps> = ({name, description, onDelete}) => {
+  const navigation = useNavigation();
+
   const truncatedDescription =
     description.length > 27
       ? description.substring(0, 30) + '...'
       : description;
-
-  const navigation = useNavigation();
 
   const handlePress = () => {
     navigation.navigate('GroupDetails', {
@@ -31,15 +32,20 @@ const GroupCard: React.FC<GroupCardProps> = ({name, description}) => {
     });
   };
   return (
-    <Container onPress={handlePress}>
+    <Container>
+      <IconContainer onPress={onDelete}>
+        <ArronIcon source={icons.trashicon} />
+      </IconContainer>
       <InfoContainer>
         <TitleCard>
           <Title>{name}</Title>
         </TitleCard>
         <Description>{truncatedDescription}</Description>
       </InfoContainer>
-      <ArronIcon source={icons.arronicon} />
-      <IconContainer />
+
+      <IconContainer onPress={handlePress}>
+        <ArronIcon source={icons.arronicon} />
+      </IconContainer>
     </Container>
   );
 };

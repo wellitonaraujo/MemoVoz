@@ -6,4 +6,7 @@ export const icons: Icons = {
   micRecordIcon: require('../assets/icons/icon-mic-record.png'),
   closeicon: require('../assets/icons/closeicon.png'),
   arronicon: require('../assets/icons/arronicon.png'),
+  arronbackicon: require('../assets/icons/iconarrowback.png'),
+  trashicon: require('../assets/icons/icontrash.png'),
+  penicon: require('../assets/icons/iconpen.png'),
 };

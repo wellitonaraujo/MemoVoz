@@ -1,28 +1,34 @@
-import {Text, View} from 'react-native';
 import React from 'react';
 import {useRoute} from '@react-navigation/native';
-import {Container, Logo} from './styles';
-import {imgs} from '../imgs';
-import {Description, Title} from '../../components/GroupCard/styles';
+import {Container, Description, EditIcon, Title} from './styles';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {icons} from '../../components/icons';
 
-const GroupDetails = () => {
+type RootStackParamList = {
+  Home: undefined;
+  NewRecording: undefined;
+  GroupDetails: {name: string; description: string};
+};
+
+type GroupDetailsScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'GroupDetails'
+>;
+
+interface Props {
+  navigation: GroupDetailsScreenNavigationProp;
+}
+
+const GroupDetails: React.FC<Props> = () => {
   const route = useRoute();
 
-  // Verifica se os parâmetros foram passados
-  if (!route.params || !route.params.name || !route.params.description) {
-    return (
-      <View>
-        <Text>Não há informações disponíveis para exibir.</Text>
-      </View>
-    );
-  }
   const {name, description} = route.params;
 
   return (
     <Container>
       <Title>{name}</Title>
+      <EditIcon source={icons.penicon} />
       <Description>{description}</Description>
-      <Logo source={imgs.logo} />
     </Container>
   );
 };

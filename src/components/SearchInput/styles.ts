@@ -6,7 +6,7 @@ import {Dimensions, Image} from 'react-native';
 const screenHeight = Dimensions.get('window').height;
 
 export const Container = styled.View`
-  background-color: ${colors.inputBorder.s100};
+  background-color: ${colors.grey.s400};
   margin-top: ${screenHeight * 0.02}px;
   flex-direction: row;
   align-items: center;
@@ -20,7 +20,7 @@ export const Container = styled.View`
 export const StyledInput = styled(TextInput)`
   font-family: 'Poppins-ExtraLight';
   font-size: 16px;
-  height: 50px;
+  height: 45px;
   flex: 1;
 `;
 
@@ -34,4 +34,5 @@ export const SearchIcon = styled(Image)`
   margin-right: 10px;
   height: 24px;
   width: 24px;
+  opacity: 0.2;
 `;

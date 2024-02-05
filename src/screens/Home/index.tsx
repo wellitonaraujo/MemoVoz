@@ -24,6 +24,7 @@ const Home: React.FC<Props> = ({navigation}) => {
     addGroupCard,
     handleSearch,
     filteredGroupCards,
+    handleDelete,
   } = useHome({
     navigation,
   });
@@ -39,7 +40,11 @@ const Home: React.FC<Props> = ({navigation}) => {
         {hasGroupCards && <ListGroupTitle>Grupos</ListGroupTitle>}
 
         {filteredGroupCards.map((groupCard, index) => (
-          <GroupCard key={index} {...groupCard} />
+          <GroupCard
+            key={index}
+            {...groupCard}
+            onDelete={() => handleDelete(index)}
+          />
         ))}
       </ScrollView>
 

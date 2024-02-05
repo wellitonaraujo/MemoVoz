@@ -7,7 +7,8 @@ export const Container = styled.Pressable`
   flex-direction: row;
   align-items: center;
   border-radius: 15px;
-  padding: 10px;
+  height: 80px;
+  padding: 10px 5px;
   width: 100%;
   ${Platform.OS === 'android'
     ? 'elevation: 5;'
@@ -17,6 +18,7 @@ export const Container = styled.Pressable`
 
 export const InfoContainer = styled.View`
   flex: 1;
+  align-items: center;
 `;
 
 export const Title = styled.Text`
@@ -28,22 +30,23 @@ export const Title = styled.Text`
 export const TitleCard = styled.Text`
   color: ${colors.grey.s200};
   border-radius: 3px;
-  padding: 0 20px;
 `;
 
 export const Description = styled.Text`
   font-size: 15px;
   font-family: 'Poppins-ExtraLight';
   color: ${colors.grey.s300};
-  padding: 0 20px;
-  margin-bottom: 20px;
 `;
 
-export const IconContainer = styled.View`
-  margin-left: 10px;
+export const IconContainer = styled.Pressable`
+  width: 40px;
+  height: 40px;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ArronIcon = styled.Image`
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 `;
