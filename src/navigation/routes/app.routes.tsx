@@ -5,6 +5,7 @@ import {RootStackParamList} from '../types';
 import Home from '../../screens/Home';
 import React from 'react';
 import GroupDetails from '../../screens/GroupDetails';
+import colors from '../../styles/colors';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -15,6 +16,7 @@ const AppRoutes: React.FC = () => (
         headerTransparent: true,
         headerTitle: '',
         headerBackTitleVisible: false,
+        headerTintColor: colors.white,
       }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="NewRecording" component={NewRecording} />

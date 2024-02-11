@@ -44,7 +44,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
             <CloseIcon source={icons.closeicon} />
           </Pressable>
           <TextInputWithBorderBottom
-            placeholder="Nome do grupo"
+            placeholder="Nome"
             value={groupName}
             onChangeText={setGroupName}
             maxLength={24}
@@ -55,7 +55,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
             </ErrorLength>
           )}
           <TextAreaWithBorder
-            placeholder="Descrição do grupo"
+            placeholder="Descrição"
             multiline={false}
             value={groupDescription}
             onChangeText={setGroupDescription}

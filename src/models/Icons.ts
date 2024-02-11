@@ -9,6 +9,10 @@ export interface Icons {
   arronbackicon: ImageSourcePropType;
   trashicon: ImageSourcePropType;
   penicon: ImageSourcePropType;
+  cancelicon: ImageSourcePropType;
+  pauseicon: ImageSourcePropType;
+  playicon: ImageSourcePropType;
+  recordingicon: ImageSourcePropType;
 }
 
 export interface InitialButtonProps {

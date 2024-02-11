@@ -6,21 +6,21 @@ import {Dimensions, Image} from 'react-native';
 const screenHeight = Dimensions.get('window').height;
 
 export const Container = styled.View`
-  background-color: ${colors.grey.s400};
+  background-color: ${colors.inputBorder.s100};
   margin-top: ${screenHeight * 0.02}px;
   flex-direction: row;
   align-items: center;
-  border-radius: 50px;
+  border-radius: 10px;
   font-size: 30px;
-  padding: 0 10px;
+  padding: 0 8px;
   width: 100%;
   margin-bottom: 30px;
+  opacity: 0.5;
 `;
 
 export const StyledInput = styled(TextInput)`
-  font-family: 'Poppins-ExtraLight';
   font-size: 16px;
-  height: 45px;
+  height: 50px;
   flex: 1;
 `;
 
@@ -31,8 +31,7 @@ export const PlaceholderText = styled.Text`
 `;
 
 export const SearchIcon = styled(Image)`
-  margin-right: 10px;
-  height: 24px;
-  width: 24px;
-  opacity: 0.2;
+  margin-left: 5px;
+  height: 20px;
+  width: 20px;
 `;

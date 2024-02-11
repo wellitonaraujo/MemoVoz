@@ -9,4 +9,8 @@ export const icons: Icons = {
   arronbackicon: require('../assets/icons/iconarrowback.png'),
   trashicon: require('../assets/icons/icontrash.png'),
   penicon: require('../assets/icons/iconpen.png'),
+  cancelicon: require('../assets/icons/cancelbutton.png'),
+  pauseicon: require('../assets/icons/pauseicon.png'),
+  playicon: require('../assets/icons/playicon.png'),
+  recordingicon: require('../assets/icons/recordingicon.png'),
 };

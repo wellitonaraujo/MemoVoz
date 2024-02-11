@@ -1,5 +1,5 @@
 const colors = {
-  background: '#040D12',
+  background: '#222831',
   primary: {
     s300: '#242329',
     s200: '#93B1A6',
@@ -26,7 +26,7 @@ const colors = {
     s100: '#F8D7DA',
   },
   inputBorder: {
-    s100: '#183D3D',
+    s100: '#495A67',
   },
 };
 

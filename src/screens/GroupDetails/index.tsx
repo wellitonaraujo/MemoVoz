@@ -32,9 +32,9 @@ const GroupDetails: React.FC<Props> = () => {
   return (
     <Container>
       <Title>{name}</Title>
-      <Pressable onPress={handlePress}>
+      {/* <Pressable onPress={handlePress}>
         <EditIcon source={icons.penicon} />
-      </Pressable>
+      </Pressable> */}
       <Description>{description}</Description>
 
       <EditGroupModal
