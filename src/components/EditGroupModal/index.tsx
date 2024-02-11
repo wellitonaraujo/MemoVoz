@@ -1,5 +1,4 @@
-import useCreateGroup from './hook/useCreateGroup';
-import {Pressable, Modal, Text} from 'react-native';
+import {Pressable, Modal} from 'react-native';
 import PrimaryButton from '../PrimaryButton';
 import colors from '../../styles/colors';
 import {icons} from '../icons';
@@ -11,27 +10,35 @@ import {
   ModalContent,
   CloseIcon,
   ButtonsContainer,
-  ErrorLength,
 } from './styles';
+import useEditGroup from './hook/useEditGroup';
 
-interface CreateGroupModalProps {
+interface EditGroupModalProps {
   visible: boolean;
   onClose: () => void;
-  addGroupCard: (groupCard: {name: string; description: string}) => void;
+  groupDetails: {
+    name: string;
+    description: string;
+  };
+  editGroup: (
+    groupName: string,
+    updatedDetails: {name: string; description: string},
+  ) => void;
 }
 
-const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
+const EditGroupModal: React.FC<EditGroupModalProps> = ({
   visible,
   onClose,
-  addGroupCard,
+  groupDetails,
+  editGroup,
 }) => {
   const {
-    groupName,
-    groupDescription,
+    editedGroupName,
+    editedGroupDescription,
+    setEditedGroupName,
+    setEditedGroupDescription,
     handleSave,
-    setGroupName,
-    setGroupDescription,
-  } = useCreateGroup({onClose, addGroupCard});
+  } = useEditGroup({groupDetails, onClose, editGroup});
   return (
     <Modal
       animationType="slide"
@@ -44,21 +51,16 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
             <CloseIcon source={icons.closeicon} />
           </Pressable>
           <TextInputWithBorderBottom
-            placeholder="Nome"
-            value={groupName}
-            onChangeText={setGroupName}
+            placeholder="Nome do grupo"
+            value={editedGroupName}
+            onChangeText={setEditedGroupName}
             maxLength={24}
           />
-          {groupName.length > 23 && (
-            <ErrorLength>
-              O nome do grupo não pode ter mais de 24 caracteres.
-            </ErrorLength>
-          )}
           <TextAreaWithBorder
-            placeholder="Descrição"
+            placeholder="Descrição do grupo"
             multiline={false}
-            value={groupDescription}
-            onChangeText={setGroupDescription}
+            value={editedGroupDescription}
+            onChangeText={setEditedGroupDescription}
           />
           <ButtonsContainer>
             <PrimaryButton title="Salvar" onPress={handleSave} />
@@ -75,4 +77,4 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
   );
 };
 
-export default CreateGroupModal;
+export default EditGroupModal;

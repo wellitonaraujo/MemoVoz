@@ -1,16 +1,16 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CreateGroupModal from '../../components/CreateGroupModal';
 import InitialButton from '../../components/InitialButton';
-import {ButtonContainer, Container, Logo} from './styles';
+import {ButtonContainer, Container, ListGroupTitle, Logo} from './styles';
 import {RootStackParamList} from '../../navigation/types';
 import SearchInput from '../../components/SearchInput';
+import GroupCard from '../../components/GroupCard';
 import {icons} from '../../components/icons';
 import colors from '../../styles/colors';
+import {ScrollView} from 'react-native';
 import useHome from './hook/useHome';
 import {imgs} from '../imgs';
 import React from 'react';
-import GroupCard from '../../components/GroupCard';
-import {Alert, ScrollView} from 'react-native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -22,38 +22,24 @@ const Home: React.FC<Props> = ({navigation}) => {
     goNewRecording,
     groupCards,
     addGroupCard,
-    deleteGroupCard,
+    handleSearch,
+    filteredGroupCards,
+    handleDelete,
   } = useHome({
     navigation,
   });
 
   const hasGroupCards = groupCards.length > 0;
 
-  const handleDelete = (index: number) => {
-    Alert.alert(
-      'Excluir Card',
-      'Tem certeza de que deseja excluir este card?',
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
-        {
-          text: 'Excluir',
-          onPress: () => deleteGroupCard(index),
-          style: 'destructive',
-        },
-      ],
-    );
-  };
-
   return (
     <Container>
-      <SearchInput placeholder="Buscar Grupo..." />
+      <SearchInput placeholder="Buscar" onSearch={handleSearch} />
       {!hasGroupCards && <Logo source={imgs.logo} />}
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {groupCards.map((groupCard, index) => (
+        {hasGroupCards && <ListGroupTitle>Grupos</ListGroupTitle>}
+
+        {filteredGroupCards.map((groupCard, index) => (
           <GroupCard
             key={index}
             {...groupCard}

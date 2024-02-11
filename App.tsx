@@ -3,7 +3,7 @@
  */
 
 import Routes from './src/navigation/routes';
-import {StatusBar} from 'react-native';
+import {PermissionsAndroid, Platform, StatusBar} from 'react-native';
 import React from 'react';
 
 function App(): React.JSX.Element {

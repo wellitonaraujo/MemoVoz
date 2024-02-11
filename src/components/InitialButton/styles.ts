@@ -6,9 +6,9 @@ interface CreateGroupProps {
 }
 
 const screenHeight = Dimensions.get('window').height;
-const buttonSize = screenHeight * 0.09;
+const buttonSize = screenHeight * 0.07;
 const marginTop = screenHeight * 0.03;
-const iconSize = buttonSize * 0.64;
+const iconSize = buttonSize * 0.6;
 
 export const CreateGroup = styled.TouchableOpacity<CreateGroupProps>`
   width: ${buttonSize}px;
