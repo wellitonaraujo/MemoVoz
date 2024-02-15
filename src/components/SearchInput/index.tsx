@@ -14,6 +14,9 @@ const SearchInput: React.FC<SearchInputProps> = ({placeholder, onSearch}) => {
 
   return (
     <Container>
+      <TouchableOpacity onPress={handleSearch}>
+        <SearchIcon source={icons.searchIcon} />
+      </TouchableOpacity>
       <StyledInput
         placeholder={placeholder}
         placeholderTextColor={colors.grey.s300}
@@ -24,9 +27,6 @@ const SearchInput: React.FC<SearchInputProps> = ({placeholder, onSearch}) => {
         }}
         onSubmitEditing={handleSearch}
       />
-      <TouchableOpacity onPress={handleSearch}>
-        <SearchIcon source={icons.searchIcon} />
-      </TouchableOpacity>
     </Container>
   );
 };

@@ -20,7 +20,7 @@ export const Container = styled.View`
 
 export const StyledInput = styled(TextInput)`
   font-size: 16px;
-  height: 50px;
+  height: 48px;
   flex: 1;
 `;
 
@@ -31,7 +31,7 @@ export const PlaceholderText = styled.Text`
 `;
 
 export const SearchIcon = styled(Image)`
-  margin-left: 5px;
+  margin: 5px 5px;
   height: 20px;
   width: 20px;
 `;
