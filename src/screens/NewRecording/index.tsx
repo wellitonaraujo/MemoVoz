@@ -1,75 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import {Pressable, TouchableOpacity} from 'react-native';
+import useRecording from './hook/useRecording';
+import {icons} from '../../components/icons';
 import {imgs} from '../imgs';
+import React from 'react';
 import {
+  RecordingContainer,
+  RecordingSection,
+  RecordingButton,
+  RecordingCount,
+  RecordingTitle,
   CancelButton,
   Container,
   Logo,
-  RecordingButton,
-  RecordingContainer,
-  RecordingCount,
-  RecordingSection,
-  RecordingTitle,
 } from './styles';
-import {Pressable, TouchableOpacity} from 'react-native';
-import {icons} from '../../components/icons';
 
 const NewRecording = () => {
-  const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [count, setCount] = useState<number>(0);
-  const [text, setText] = useState<string>(
-    'Toque no botão abaixo para começar',
-  );
-
-  useEffect(() => {
-    let timer: any;
-    if (isRecording && !isPaused) {
-      timer = setInterval(() => {
-        setCount(prevCount => prevCount + 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [isRecording, isPaused]);
-
-  const startRecording = () => {
-    setIsRecording(true);
-    setText('Gravando...');
-    setCount(0);
-  };
-
-  const pauseRecording = () => {
-    setIsPaused(true);
-    setText('Gravação pausada');
-  };
-
-  const resumeRecording = () => {
-    setIsPaused(false);
-    setText('Gravando...');
-  };
-
-  const cancelRecording = () => {
-    setIsRecording(false);
-    setIsPaused(false);
-    setText('Toque no botão abaixo para começar');
-    setCount(0);
-  };
-
-  const formatTime = (seconds: number): string => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes < 10 ? '0' : ''}${minutes}:${
-      remainingSeconds < 10 ? '0' : ''
-    }${remainingSeconds}`;
-  };
+  const {
+    isRecording,
+    isPaused,
+    count,
+    text,
+    startRecording,
+    pauseRecording,
+    resumeRecording,
+    cancelRecording,
+    formatTime,
+  } = useRecording();
 
   return (
     <Container>
-      <Logo source={imgs.logo} />
-
       <RecordingSection>
-        <RecordingTitle>{text}</RecordingTitle>
-
+        <Logo source={imgs.logo} />
         <RecordingCount>{formatTime(count)}</RecordingCount>
+        <RecordingTitle>{text}</RecordingTitle>
 
         <RecordingContainer>
           {isRecording && !isPaused ? (
