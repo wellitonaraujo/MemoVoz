@@ -1,55 +1,55 @@
-import React, {useState} from 'react';
+import {Pressable, TouchableOpacity} from 'react-native';
+import useRecording from './hook/useRecording';
+import {icons} from '../../components/icons';
 import {imgs} from '../imgs';
+import React from 'react';
 import {
+  RecordingContainer,
+  RecordingSection,
+  RecordingButton,
+  RecordingCount,
+  RecordingTitle,
   CancelButton,
   Container,
   Logo,
-  RecordingButton,
-  RecordingContainer,
-  RecordingCount,
-  RecordingSection,
-  RecordingTitle,
 } from './styles';
-import {Pressable, Text, TouchableOpacity, View} from 'react-native';
-import {icons} from '../../components/icons';
 
 const NewRecording = () => {
-  const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [text, setText] = useState<string>(
-    'Toque no botão abaixo para começar',
-  );
-
-  const startRecording = () => {
-    setIsRecording(true);
-    setText('Gravando...');
-  };
-
-  const pauseRecording = () => {
-    setIsRecording(false);
-    setText('Toque no botão abaixo para começar');
-  };
-
-  const resumeRecording = () => {
-    setIsRecording(true);
-    setText('Gravando...');
-  };
+  const {
+    isRecording,
+    isPaused,
+    count,
+    text,
+    startRecording,
+    pauseRecording,
+    resumeRecording,
+    cancelRecording,
+    formatTime,
+  } = useRecording();
 
   return (
     <Container>
-      <Logo source={imgs.logo} />
-
       <RecordingSection>
+        <Logo source={imgs.logo} />
+        <RecordingCount>{formatTime(count)}</RecordingCount>
         <RecordingTitle>{text}</RecordingTitle>
 
-        <RecordingCount>00:06</RecordingCount>
-
         <RecordingContainer>
-          {isRecording ? (
+          {isRecording && !isPaused ? (
             <>
               <TouchableOpacity onPress={pauseRecording}>
                 <RecordingButton source={icons.pauseicon} />
               </TouchableOpacity>
-              <Pressable onPress={pauseRecording}>
+              <Pressable onPress={cancelRecording}>
+                <CancelButton source={icons.cancelicon} />
+              </Pressable>
+            </>
+          ) : isPaused ? (
+            <>
+              <TouchableOpacity onPress={resumeRecording}>
+                <RecordingButton source={icons.playicon} />
+              </TouchableOpacity>
+              <Pressable onPress={cancelRecording}>
                 <CancelButton source={icons.cancelicon} />
               </Pressable>
             </>
