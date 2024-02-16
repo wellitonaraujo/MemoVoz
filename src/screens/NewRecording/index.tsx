@@ -1,3 +1,4 @@
+import RecordingAnimation from '../../components/RecordingAnimation';
 import {Pressable, TouchableOpacity} from 'react-native';
 import useRecording from './hook/useRecording';
 import {icons} from '../../components/icons';
@@ -5,7 +6,6 @@ import {imgs} from '../imgs';
 import React from 'react';
 import {
   RecordingContainer,
-  RecordingSection,
   RecordingButton,
   RecordingCount,
   RecordingTitle,
@@ -25,13 +25,16 @@ const NewRecording = () => {
     resumeRecording,
     cancelRecording,
     formatTime,
+    pulseAnim,
   } = useRecording();
 
   return (
     <Container>
-      <RecordingSection>
-        <Logo source={imgs.logo} />
+      <>
         <RecordingCount>{formatTime(count)}</RecordingCount>
+
+        {isRecording && <RecordingAnimation pulseAnim={pulseAnim} />}
+        <Logo source={imgs.logo} />
         <RecordingTitle>{text}</RecordingTitle>
 
         <RecordingContainer>
@@ -59,7 +62,7 @@ const NewRecording = () => {
             </TouchableOpacity>
           )}
         </RecordingContainer>
-      </RecordingSection>
+      </>
     </Container>
   );
 };

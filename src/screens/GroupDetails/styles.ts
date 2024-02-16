@@ -1,8 +1,9 @@
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
 import {Dimensions} from 'react-native';
 
-const screenHeight = Dimensions.get('window').height;
+const {width, height} = Dimensions.get('window');
 
 export const Container = styled.View`
   flex: 1;
@@ -11,26 +12,18 @@ export const Container = styled.View`
 `;
 
 export const ButtonContainer = styled.View`
-  bottom: 20px;
-  right: 20px;
+  bottom: ${height * 0.03}px;
+  right: ${width * 0.05}px;
   position: absolute;
 `;
 export const ListGroupTitle = styled.Text`
-  font-size: 27px;
+  font-size: ${RFValue(25)}px;
   color: ${colors.white};
   padding: 20px 0 20px 0;
 `;
 
-export const Logo = styled.Image`
-  width: 214px;
-  height: 214px;
-  align-self: center;
-  margin-top: ${screenHeight * 0.25}px;
-  position: relative;
-`;
-
 export const Title = styled.Text`
-  font-size: 17px;
+  font-size: ${RFValue(22)}px;
   font-family: 'Poppins-Regular';
   color: ${colors.grey.s200};
   align-self: center;
@@ -38,7 +31,7 @@ export const Title = styled.Text`
 `;
 
 export const Description = styled.Text`
-  font-size: 15px;
+  font-size: ${RFValue(15)}px;
   font-family: 'Poppins-ExtraLight';
   color: ${colors.grey.s300};
   padding-top: 30px;
