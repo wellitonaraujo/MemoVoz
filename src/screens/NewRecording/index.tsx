@@ -32,9 +32,11 @@ const NewRecording = () => {
     <Container>
       <>
         <RecordingCount>{formatTime(count)}</RecordingCount>
-
-        {isRecording && <RecordingAnimation pulseAnim={pulseAnim} />}
-        <Logo source={imgs.logo} />
+        {isRecording && !isPaused ? (
+          <RecordingAnimation pulseAnim={pulseAnim} />
+        ) : (
+          <Logo source={imgs.logo} />
+        )}
         <RecordingTitle>{text}</RecordingTitle>
 
         <RecordingContainer>

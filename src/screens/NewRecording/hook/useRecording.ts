@@ -39,7 +39,9 @@ const useRecording = (): UseRecordingReturnType => {
         setCount(prevCount => prevCount + 1);
       }, 1000);
     } else {
-      stopAnimation();
+      if (!isPaused) {
+        stopAnimation();
+      }
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
