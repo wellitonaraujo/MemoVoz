@@ -1,42 +1,44 @@
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
+import {Dimensions} from 'react-native';
+
+const {width, height} = Dimensions.get('window');
 
 export const Container = styled.View`
   flex: 1;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  flex-direction: column;
   background-color: ${colors.background};
 `;
 
 export const Logo = styled.Image`
-  width: 214px;
-  height: 214px;
+  width: ${width * 0.3}px;
+  height: ${height * 0.3}px;
+  aspect-ratio: 1;
   align-self: center;
-  opacity: 0.5;
-`;
-
-export const Title = styled.Text`
-  font-size: 23px;
-  color: ${colors.white};
+  opacity: 0.1;
 `;
 
 export const RecordingContainer = styled.View`
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  margin: 5%;
+  padding-bottom: ${height * 0.04}px;
 `;
 
 export const CancelButton = styled.Image`
-  width: 60px;
-  height: 60px;
-  margin: 5px;
+  margin-left: ${width * 0.03}px;
+  height: ${height * 0.05}px;
+  width: ${width * 0.05}px;
+  aspect-ratio: 1;
 `;
 
 export const RecordingButton = styled.Image`
-  width: 70px;
-  height: 70px;
-  margin: 5px;
+  height: ${height * 0.08}px;
+  width: ${width * 0.08}px;
+  aspect-ratio: 1;
 `;
 
 export const RecordingSection = styled.View`
@@ -45,12 +47,12 @@ export const RecordingSection = styled.View`
 
 export const RecordingTitle = styled.Text`
   color: ${colors.white};
-  font-size: 19px;
-  margin: 5%;
+  font-size: ${RFValue(20)}px;
 `;
 
 export const RecordingCount = styled.Text`
   color: ${colors.white};
-  font-size: 70px;
+  font-size: ${RFValue(70)}px;
   align-self: center;
+  padding-top: 10%;
 `;

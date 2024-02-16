@@ -34,7 +34,7 @@ export const TextInputWithBorderBottom = styled.TextInput`
   border-width: 0.4px;
   padding-left: 10px;
   margin-top: 50px;
-  border-radius: 3px;
+  border-radius: 6px;
   font-size: 18px;
   opacity: 0.6;
 `;
@@ -50,7 +50,7 @@ export const TextAreaWithBorder = styled.TextInput`
   font-size: 16px;
   opacity: 0.6;
   height: 200px;
-  border-radius: 3px;
+  border-radius: 6px;
 `;
 
 export const ButtonsContainer = styled.View``;

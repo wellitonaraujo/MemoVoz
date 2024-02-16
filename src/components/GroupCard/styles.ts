@@ -1,9 +1,10 @@
+import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
 import {Platform} from 'react-native';
 
 export const Container = styled.Pressable`
-  background-color: ${colors.primary.s100};
+  background-color: ${colors.inputBorder.s100};
   flex-direction: row;
   align-items: center;
   border-radius: 15px;
@@ -22,7 +23,7 @@ export const InfoContainer = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 17px;
+  font-size: ${RFValue(15)}px;
   font-family: 'Poppins-Regular';
   color: ${colors.grey.s200};
 `;

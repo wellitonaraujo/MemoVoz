@@ -1,25 +1,63 @@
-import {useEffect, useState} from 'react';
+import {UseRecordingReturnType} from '../../../models/UseRecordingReturnType';
+import {useEffect, useState, useRef} from 'react';
+import {Animated} from 'react-native';
 
-const useRecording = () => {
+const useRecording = (): UseRecordingReturnType => {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
-  const [text, setText] = useState<string>(
-    'Toque no botão abaixo para começar',
-  );
+  const [text, setText] = useState<string>('Toque no botão para começar');
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    let timer: any;
+    const startAnimation = () => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1.2,
+            duration: 500,
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start();
+    };
+
+    const stopAnimation = () => {
+      pulseAnim.stopAnimation();
+      pulseAnim.setValue(1);
+    };
+
     if (isRecording && !isPaused) {
-      timer = setInterval(() => {
+      startAnimation();
+      timerRef.current = setInterval(() => {
         setCount(prevCount => prevCount + 1);
       }, 1000);
+    } else {
+      if (!isPaused) {
+        stopAnimation();
+      }
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
     }
-    return () => clearInterval(timer);
-  }, [isRecording, isPaused]);
+
+    return () => {
+      stopAnimation();
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [isRecording, isPaused, pulseAnim]);
 
   const startRecording = () => {
     setIsRecording(true);
+    setIsPaused(false);
     setText('Gravando...');
     setCount(0);
   };
@@ -37,7 +75,7 @@ const useRecording = () => {
   const cancelRecording = () => {
     setIsRecording(false);
     setIsPaused(false);
-    setText('Toque no botão abaixo para começar');
+    setText('Toque no botão para começar');
     setCount(0);
   };
 
@@ -59,6 +97,7 @@ const useRecording = () => {
     resumeRecording,
     cancelRecording,
     formatTime,
+    pulseAnim,
   };
 };
 
