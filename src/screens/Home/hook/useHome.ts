@@ -1,6 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useState, useEffect} from 'react';
-import {Alert} from 'react-native';
+import {Alert, PermissionsAndroid, Platform} from 'react-native';
+import {
+  PERMISSIONS,
+  RESULTS,
+  check,
+  requestMultiple,
+} from 'react-native-permissions';
 
 interface UseHomeProps {
   navigation?: any;
