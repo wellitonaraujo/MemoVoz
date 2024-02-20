@@ -2,6 +2,7 @@ import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
 import RecordingAnimation from '../../components/RecordingAnimation';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import {Animated, Pressable, Text, TouchableOpacity} from 'react-native';
+import SaveRecordingModal from '../../components/SaveRecordingModal';
 import React, {useEffect, useRef, useState} from 'react';
 import {icons} from '../../components/icons';
 import RNFS from 'react-native-fs';
@@ -21,10 +22,9 @@ const audioRecorderPlayer = new AudioRecorderPlayer();
 
 const NewRecording = () => {
   const [pulseAnim] = useState(new Animated.Value(1));
-  const [cancelledAudioFilePath, setCancelledAudioFilePath] = useState<
-    string | null
-  >(null);
-  const [recordedAudioFiles, setRecordedAudioFiles] = useState<string[]>([]);
+  const [recordedAudioFiles, setRecordedAudioFiles] = useState<
+    {name: string; path: string}[]
+  >([]);
 
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -145,15 +145,21 @@ const NewRecording = () => {
 
   const cancelRecording = async () => {
     try {
+      openModal();
       await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
       setIsRecording(false);
       setIsPaused(false);
       setText('Toque no botão para começar');
-      // Adicionar o caminho do arquivo de áudio gravado ao array
+
       if (audioFilePath) {
-        setRecordedAudioFiles(prevFiles => [...prevFiles, audioFilePath]);
+        const newAudioFile = {
+          name: `Recording ${recordedAudioFiles.length + 1}`,
+          path: audioFilePath,
+        };
+        setRecordedAudioFiles(prevFiles => [...prevFiles, newAudioFile]);
       }
+
       setAudioFilePath('');
       setCount(0);
       console.log('Gravação cancelada. ');
@@ -176,6 +182,21 @@ const NewRecording = () => {
     return `${minutes < 10 ? '0' : ''}${minutes}:${
       remainingSeconds < 10 ? '0' : ''
     }${remainingSeconds}`;
+  };
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  // Função para adicionar o áudio gravado à lista com o nome fornecido pelo usuário
+  const addRecording = (name: string) => {
+    setRecordedAudioFiles([...recordedAudioFiles, {name, path: audioFilePath}]);
+    console.log(`Gravação salva com o nome: ${name}`);
   };
 
   return (
@@ -212,21 +233,13 @@ const NewRecording = () => {
           </TouchableOpacity>
         )}
       </RecordingContainer>
-      <Pressable
-        onPress={playRecording}
-        style={{width: 100, height: 30, backgroundColor: 'white'}}>
-        <Text
-          style={{
-            color: 'black',
-            alignSelf: 'center',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          Play
-        </Text>
-      </Pressable>
-      {recordedAudioFiles.map((audioPath, index) => (
-        <Pressable key={index} onPress={() => playRecording(audioPath)}>
+      <SaveRecordingModal
+        visible={modalVisible}
+        onClose={closeModal}
+        addRecording={addRecording}
+      />
+      {recordedAudioFiles.map((audio, index) => (
+        <Pressable key={index} onPress={() => playRecording(audio.path)}>
           <Text>Áudio {index + 1}</Text>
         </Pressable>
       ))}
