@@ -33,9 +33,29 @@ const NewRecording = () => {
   const [text, setText] = useState('Toque no botão para começar');
   const [audioFilePath, setAudioFilePath] = useState('');
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [recordingInfo, setRecordingInfo] = useState({
+    date: '',
+    duration: '',
+    fileSize: '',
+  });
 
-  const openModal = () => {
+  const bytesToKiloBytes = (bytes: number): string => {
+    return (bytes / 1024).toFixed(2) + ' kB';
+  };
+
+  // Função para abrir o modal
+  const openModal = async () => {
     setModalVisible(true);
+    const date = new Date().toLocaleString('pt-BR');
+    const duration = formatTime(count);
+
+    try {
+      const fileStat = await RNFS.stat(audioFilePath);
+      const fileSize = bytesToKiloBytes(fileStat.size);
+      setRecordingInfo({date, duration, fileSize});
+    } catch (error) {
+      console.error('Erro ao obter o tamanho do arquivo:', error);
+    }
   };
 
   const closeModal = () => {
@@ -239,6 +259,7 @@ const NewRecording = () => {
         visible={modalVisible}
         onClose={closeModal}
         addRecording={addRecording}
+        recordingInfo={recordingInfo}
       />
       {recordedAudioFiles.map((audio, index) => (
         <Pressable key={index} onPress={() => playRecording(audio.path)}>

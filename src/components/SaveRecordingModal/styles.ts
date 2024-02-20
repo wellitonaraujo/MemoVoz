@@ -33,7 +33,7 @@ export const TextInputWithBorderBottom = styled.TextInput`
   font-family: 'Poppins-ExtraLight';
   border-width: 0.4px;
   padding-left: 10px;
-  margin-top: 50px;
+  margin-top: 40px;
   border-radius: 6px;
   font-size: 18px;
   opacity: 0.6;
@@ -58,4 +58,34 @@ export const ButtonsContainer = styled.View``;
 export const ErrorLength = styled.Text`
   color: ${colors.error.s200};
   font-size: 12px;
+`;
+
+export const Icon = styled.Image`
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+`;
+
+export const InfoTitle = styled.Text`
+  color: ${colors.primary.s100};
+  font-size: 28px;
+  font-family: 'Poppins-Light';
+  padding: 20px 0 15px 0;
+`;
+
+export const Title = styled.Text`
+  color: ${colors.primary.s100};
+  font-size: 22px;
+  margin-bottom: 8px;
+`;
+
+export const InfosContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: 25px;
+`;
+
+export const ValueTitle = styled.Text`
+  color: ${colors.grey.s300};
+  font-size: 20px;
+  font-family: 'Poppins-ExtraLight';
 `;
