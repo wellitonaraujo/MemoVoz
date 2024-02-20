@@ -115,7 +115,6 @@ const NewRecording = () => {
         setIsRecording(true);
         setIsPaused(false);
         setText('Gravando...');
-        setCount(0);
         setAudioFilePath(audioPath);
       });
     } catch (error) {
@@ -162,47 +161,10 @@ const NewRecording = () => {
 
   const playRecording = async () => {
     try {
-      const readStoragePermission = await check(
-        PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-      );
-      const writeStoragePermission = await check(
-        PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-      );
-
-      if (
-        readStoragePermission === RESULTS.GRANTED &&
-        writeStoragePermission === RESULTS.GRANTED
-      ) {
-        if (audioFilePath) {
-          await audioRecorderPlayer.startPlayer(audioFilePath);
-          audioRecorderPlayer.addPlayBackListener(e => {
-            console.log('Tocando . . . ', e);
-            return;
-          });
-        } else {
-          console.warn('Nenhuma gravação disponível para ouvir');
-        }
+      if (audioFilePath) {
+        await audioRecorderPlayer.startPlayer(audioFilePath);
       } else {
-        console.log('Permissões não concedidas. Solicitando...');
-        const results = await requestMultiple([
-          PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-          PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-        ]);
-
-        if (
-          results[PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE] !==
-            RESULTS.GRANTED ||
-          results[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE] !==
-            RESULTS.GRANTED
-        ) {
-          console.log('Permissões não concedidas após a solicitação');
-          return;
-        }
-
-        console.log(
-          'Permissões concedidas após a solicitação. Tentando reproduzir novamente...',
-        );
-        playRecording(); // Tenta reproduzir novamente após a obtenção das permissões
+        console.warn('Nenhuma gravação disponível para ouvir');
       }
     } catch (error) {
       console.error('Falha ao reproduzir a gravação', error);
