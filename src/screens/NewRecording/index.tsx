@@ -24,6 +24,7 @@ const NewRecording = () => {
   const [cancelledAudioFilePath, setCancelledAudioFilePath] = useState<
     string | null
   >(null);
+  const [recordedAudioFiles, setRecordedAudioFiles] = useState<string[]>([]);
 
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -144,14 +145,16 @@ const NewRecording = () => {
 
   const cancelRecording = async () => {
     try {
-      // Lógica para cancelar a gravação...
-      const cancelledPath = generateAudioFilePath();
       await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
       setIsRecording(false);
       setIsPaused(false);
       setText('Toque no botão para começar');
-      setCancelledAudioFilePath(cancelledPath);
+      // Adicionar o caminho do arquivo de áudio gravado ao array
+      if (audioFilePath) {
+        setRecordedAudioFiles(prevFiles => [...prevFiles, audioFilePath]);
+      }
+      setAudioFilePath('');
       setCount(0);
       console.log('Gravação cancelada. ');
     } catch (error) {
@@ -159,15 +162,11 @@ const NewRecording = () => {
     }
   };
 
-  const playRecording = async () => {
+  const playRecording = async (audioPath: string) => {
     try {
-      if (audioFilePath) {
-        await audioRecorderPlayer.startPlayer(audioFilePath);
-      } else {
-        console.warn('Nenhuma gravação disponível para ouvir');
-      }
+      await audioRecorderPlayer.startPlayer(audioPath);
     } catch (error) {
-      console.error('Falha ao reproduzir a gravação', error);
+      console.error('Falha ao reproduzir o áudio', error);
     }
   };
 
@@ -226,6 +225,11 @@ const NewRecording = () => {
           Play
         </Text>
       </Pressable>
+      {recordedAudioFiles.map((audioPath, index) => (
+        <Pressable key={index} onPress={() => playRecording(audioPath)}>
+          <Text>Áudio {index + 1}</Text>
+        </Pressable>
+      ))}
     </Container>
   );
 };
