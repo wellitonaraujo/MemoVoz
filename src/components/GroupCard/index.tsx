@@ -15,9 +15,15 @@ interface GroupCardProps {
   name: string;
   description: string;
   onDelete?: () => void;
+  cancelledAudioFilePath?: string;
 }
 
-const GroupCard: React.FC<GroupCardProps> = ({name, description, onDelete}) => {
+const GroupCard: React.FC<GroupCardProps> = ({
+  cancelledAudioFilePath,
+  name,
+  description,
+  onDelete,
+}) => {
   const navigation = useNavigation();
 
   const truncatedDescription =
