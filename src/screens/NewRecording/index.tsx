@@ -1,18 +1,12 @@
+import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
 import RecordingAnimation from '../../components/RecordingAnimation';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
-import {Animated, Pressable, TouchableOpacity} from 'react-native';
+import {Animated, Pressable, Text, TouchableOpacity} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {icons} from '../../components/icons';
+import RNFS from 'react-native-fs';
 import {imgs} from '../imgs';
 
-import RNFS from 'react-native-fs';
-import {
-  PERMISSIONS,
-  RESULTS,
-  check,
-  request,
-  requestMultiple,
-} from 'react-native-permissions';
 import {
   CancelButton,
   Container,
@@ -27,6 +21,10 @@ const audioRecorderPlayer = new AudioRecorderPlayer();
 
 const NewRecording = () => {
   const [pulseAnim] = useState(new Animated.Value(1));
+  const [cancelledAudioFilePath, setCancelledAudioFilePath] = useState<
+    string | null
+  >(null);
+
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [count, setCount] = useState(0);
@@ -146,12 +144,14 @@ const NewRecording = () => {
 
   const cancelRecording = async () => {
     try {
+      // Lógica para cancelar a gravação...
+      const cancelledPath = generateAudioFilePath();
       await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
       setIsRecording(false);
       setIsPaused(false);
       setText('Toque no botão para começar');
-      setAudioFilePath('');
+      setCancelledAudioFilePath(cancelledPath);
       setCount(0);
       console.log('Gravação cancelada. ');
     } catch (error) {
@@ -215,8 +215,17 @@ const NewRecording = () => {
       </RecordingContainer>
       <Pressable
         onPress={playRecording}
-        style={{width: 100, height: 30, backgroundColor: 'white'}}
-      />
+        style={{width: 100, height: 30, backgroundColor: 'white'}}>
+        <Text
+          style={{
+            color: 'black',
+            alignSelf: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          Play
+        </Text>
+      </Pressable>
     </Container>
   );
 };
