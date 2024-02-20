@@ -25,13 +25,22 @@ const NewRecording = () => {
   const [recordedAudioFiles, setRecordedAudioFiles] = useState<
     {name: string; path: string}[]
   >([]);
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [tempAudioFilePath, setTempAudioFilePath] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [count, setCount] = useState(0);
   const [text, setText] = useState('Toque no botão para começar');
   const [audioFilePath, setAudioFilePath] = useState('');
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   useEffect(() => {
     const startAnimation = () => {
@@ -153,18 +162,26 @@ const NewRecording = () => {
       setText('Toque no botão para começar');
 
       if (audioFilePath) {
-        const newAudioFile = {
-          name: `Recording ${recordedAudioFiles.length + 1}`,
-          path: audioFilePath,
-        };
-        setRecordedAudioFiles(prevFiles => [...prevFiles, newAudioFile]);
+        setTempAudioFilePath(audioFilePath);
+        setCount(0);
       }
 
       setAudioFilePath('');
-      setCount(0);
-      console.log('Gravação cancelada. ');
     } catch (error) {
       console.error('Falha ao cancelar a gravação', error);
+    }
+  };
+
+  const addRecording = (name: string) => {
+    if (name && tempAudioFilePath) {
+      const newAudioFile = {
+        name,
+        path: tempAudioFilePath,
+      };
+      setRecordedAudioFiles(prevFiles => [...prevFiles, newAudioFile]);
+      setTempAudioFilePath('');
+      setCount(0);
+      closeModal();
     }
   };
 
@@ -182,21 +199,6 @@ const NewRecording = () => {
     return `${minutes < 10 ? '0' : ''}${minutes}:${
       remainingSeconds < 10 ? '0' : ''
     }${remainingSeconds}`;
-  };
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
-  // Função para adicionar o áudio gravado à lista com o nome fornecido pelo usuário
-  const addRecording = (name: string) => {
-    setRecordedAudioFiles([...recordedAudioFiles, {name, path: audioFilePath}]);
-    console.log(`Gravação salva com o nome: ${name}`);
   };
 
   return (
@@ -240,7 +242,7 @@ const NewRecording = () => {
       />
       {recordedAudioFiles.map((audio, index) => (
         <Pressable key={index} onPress={() => playRecording(audio.path)}>
-          <Text>Áudio {index + 1}</Text>
+          <Text>{audio.name}</Text>
         </Pressable>
       ))}
     </Container>
