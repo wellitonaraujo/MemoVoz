@@ -31,3 +31,25 @@ export const Logo = styled.Image`
   position: relative;
   opacity: 0.1;
 `;
+
+export const AudioPlayer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  width: ${width * 0.4}px;
+  height: ${height * 0.1}px;
+  color: ${colors.primary.s100};
+  width: 100%;
+`;
+
+export const AudioName = styled.Text`
+  flex: 1;
+  color: ${colors.white};
+  font-size: 23px;
+  margin-left: 10px;
+`;
+
+export const Play = styled.Image`
+  width: ${width * 0.05}px;
+  height: ${height * 0.05}px;
+  aspect-ratio: 1;
+`;

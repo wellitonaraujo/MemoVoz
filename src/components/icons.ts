@@ -16,4 +16,5 @@ export const icons: Icons = {
   dateicon: require('../assets/icons/date.png'),
   clockicon: require('../assets/icons/clock.png'),
   fileicon: require('../assets/icons/file.png'),
+  playiconButon: require('../assets/icons/ButtonPlay.png'),
 };

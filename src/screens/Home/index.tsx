@@ -54,12 +54,6 @@ const Home: React.FC<Props> = ({navigation}) => {
           onPress={handlePress}
           backgroundColor={colors.white}
         />
-
-        <InitialButton
-          icon={icons.micRecordIcon}
-          onPress={goNewRecording}
-          backgroundColor={colors.red}
-        />
       </ButtonContainer>
 
       <CreateGroupModal

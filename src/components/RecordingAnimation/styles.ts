@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const {width, height} = Dimensions.get('window');
 
 export const AnimationContainer = styled(Animated.View)`
-  width: ${width * 0.3}px;
-  height: ${height * 0.3}px;
+  width: ${width * 0.15}px;
+  height: ${height * 0.15}px;
   border-radius: ${width * 1}px;
   aspect-ratio: 1;
   background-color: red;

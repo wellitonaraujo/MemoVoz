@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import NewRecording from '../../screens/NewRecording';
+//import NewRecording from '../../screens/NewRecording';
 import {RootStackParamList} from '../types';
 import Home from '../../screens/Home';
 import React from 'react';
@@ -22,7 +22,7 @@ const AppRoutes: React.FC = () => (
           headerTintColor: colors.white,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="NewRecording"
         component={NewRecording}
         options={{
@@ -33,7 +33,7 @@ const AppRoutes: React.FC = () => (
           headerTintColor: colors.white,
           headerTitleAlign: 'center',
         }}
-      />
+      /> */}
       <Stack.Screen
         name="GroupDetails"
         component={GroupDetails}
