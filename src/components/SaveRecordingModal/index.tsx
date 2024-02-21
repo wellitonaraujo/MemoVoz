@@ -35,7 +35,7 @@ const SaveRecordingModal: React.FC<SaveRecordingModalProps> = ({
   addRecording,
   recordingInfo,
 }) => {
-  const {recordingName, handleSave, setRecordingName} = useSaveRecordingModal({
+  const {recordingName, setRecordingName} = useSaveRecordingModal({
     onClose,
     addRecording,
   });

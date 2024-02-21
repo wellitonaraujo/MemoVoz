@@ -40,6 +40,7 @@ const Home: React.FC<Props> = ({navigation}) => {
 
         {filteredGroupCards.map((groupCard, index) => (
           <GroupCard
+            groupId={''}
             key={index}
             {...groupCard}
             onDelete={() => handleDelete(index)}

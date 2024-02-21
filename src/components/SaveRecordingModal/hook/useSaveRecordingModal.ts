@@ -29,7 +29,7 @@ const useSaveRecordingModal = ({
       setError('O campo Nome é obrigatório.');
       return;
     }
-    addRecording(recordingName); // Passa apenas o nome do áudio
+    addRecording(recordingName);
     setRecordingName('');
     setError('');
     closeModal();

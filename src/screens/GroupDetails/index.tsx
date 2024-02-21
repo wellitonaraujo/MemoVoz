@@ -1,6 +1,6 @@
 // GroupDetails.tsx
 import React, {useEffect, useRef, useState} from 'react';
-import {useRoute} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {icons} from '../../components/icons';
 import {Animated, BackHandler, Pressable} from 'react-native';
@@ -65,9 +65,13 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   const [tempAudioFilePath, setTempAudioFilePath] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [currentPlayingAudioPath, setCurrentPlayingAudioPath] =
+    useState<string>('');
   const [count, setCount] = useState(0);
   const [text, setText] = useState('Toque no botão para começar');
   const [audioFilePath, setAudioFilePath] = useState('');
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [recordingInfo, setRecordingInfo] = useState({
     date: '',
@@ -103,7 +107,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   const generateAudioFilePath = () => {
     const randomNumber = Math.floor(Math.random() * 1000) + 1; // Gera um número aleatório entre 1 e 1000
     console.log(randomNumber);
-    return `${RNFS.DownloadDirectoryPath}/recording${randomNumber}.mp3`;
+    return `${RNFS.DocumentDirectoryPath}/recording${randomNumber}.mp3`;
   };
 
   const startRecording = async () => {
@@ -211,23 +215,12 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     }
   };
 
-  const playRecording = async (audioPath: string) => {
-    try {
-      // Parar a reprodução do áudio atual antes de iniciar outro
-      await audioRecorderPlayer.stopPlayer();
-      // Iniciar a reprodução do novo áudio
-      await audioRecorderPlayer.startPlayer(audioPath);
-    } catch (error) {
-      console.log('Falha ao reproduzir o áudio', error);
-    }
-  };
-
   // Função para excluir um arquivo de áudio
   const deleteRecording = async (index: number) => {
     const updatedAudioFiles = [...recordedAudioFiles];
     updatedAudioFiles.splice(index, 1);
     setRecordedAudioFiles(updatedAudioFiles);
-
+    stopRecording();
     // Atualizando o AsyncStorage após a exclusão
     try {
       await AsyncStorage.setItem(name, JSON.stringify(updatedAudioFiles));
@@ -236,6 +229,30 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
         'Erro ao excluir o arquivo de áudio do AsyncStorage:',
         error,
       );
+    }
+  };
+
+  const playRecording = async (audioPath: string) => {
+    try {
+      if (currentPlayingAudioPath) {
+        await audioRecorderPlayer.stopPlayer();
+      }
+      await audioRecorderPlayer.startPlayer(audioPath);
+      setCurrentPlayingAudioPath(audioPath);
+      setIsAudioPlaying(true); // Definir como true ao iniciar a reprodução
+    } catch (error) {
+      console.log('Falha ao reproduzir o áudio', error);
+    }
+  };
+
+  // Função para parar a reprodução de um áudio
+  const stopRecording = async () => {
+    try {
+      await audioRecorderPlayer.stopPlayer();
+      setCurrentPlayingAudioPath('');
+      setIsAudioPlaying(false); // Definir como false ao parar a reprodução
+    } catch (error) {
+      console.log('Falha ao parar o áudio', error);
     }
   };
 
@@ -322,6 +339,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
       backHandler.remove();
       // Cancelar a gravação ao sair da tela
       cancelRecording();
+      stopRecording();
       console.log('Componente GroupDetails desmontado');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -378,8 +396,23 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
         {!isRecording &&
           recordedAudioFiles.map((audio, index) => (
             <AudioPlayer key={index}>
-              <Pressable onPress={() => playRecording(audio.path)}>
-                <Play source={icons.playiconButon} />
+              <Pressable
+                onPress={() => {
+                  if (currentPlayingAudioPath === audio.path) {
+                    // Se o áudio atualmente em reprodução for o mesmo que o áudio clicado, parar a reprodução
+                    stopRecording();
+                  } else {
+                    // Caso contrário, iniciar a reprodução do áudio clicado
+                    playRecording(audio.path);
+                  }
+                }}>
+                <Play
+                  source={
+                    currentPlayingAudioPath === audio.path && isAudioPlaying
+                      ? icons.pauseiconButon
+                      : icons.playiconButon
+                  }
+                />
               </Pressable>
               <AudioName>{audio.name}</AudioName>
 
