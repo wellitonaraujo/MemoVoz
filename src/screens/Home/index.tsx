@@ -19,7 +19,6 @@ const Home: React.FC<Props> = ({navigation}) => {
     modalVisible,
     handlePress,
     onClose,
-    goNewRecording,
     groupCards,
     addGroupCard,
     handleSearch,
@@ -53,12 +52,6 @@ const Home: React.FC<Props> = ({navigation}) => {
           icon={icons.createGroupIcon}
           onPress={handlePress}
           backgroundColor={colors.white}
-        />
-
-        <InitialButton
-          icon={icons.micRecordIcon}
-          onPress={goNewRecording}
-          backgroundColor={colors.red}
         />
       </ButtonContainer>
 
