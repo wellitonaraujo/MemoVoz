@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {icons} from '../../components/icons';
-import {Animated, Pressable} from 'react-native';
+import {Animated, BackHandler, Pressable} from 'react-native';
 import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
@@ -82,11 +82,17 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     const duration = formatTime(count);
 
     try {
-      const fileStat = await RNFS.stat(audioFilePath);
-      const fileSize = bytesToKiloBytes(fileStat.size);
-      setRecordingInfo({date, duration, fileSize});
+      const fileExists = await RNFS.exists(audioFilePath);
+      // Verificar se o arquivo de áudio ainda existe
+      if (fileExists) {
+        const fileStat = await RNFS.stat(audioFilePath);
+        const fileSize = bytesToKiloBytes(fileStat.size);
+        setRecordingInfo({date, duration, fileSize});
+      } else {
+        console.log('O arquivo de áudio não existe mais');
+      }
     } catch (error) {
-      console.error('Erro ao obter o tamanho do arquivo:', error);
+      console.log('Erro ao obter o tamanho do arquivo:', error);
     }
   };
 
@@ -133,7 +139,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
         setAudioFilePath(audioPath);
       });
     } catch (error) {
-      console.error('Falha ao iniciar a gravação', error);
+      console.log('Falha ao iniciar a gravação', error);
     }
   };
 
@@ -144,7 +150,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
       setText('Gravação pausada');
       console.log('Gravação pausada ');
     } catch (error) {
-      console.error('Falha ao pausar a gravação', error);
+      console.log('Falha ao pausar a gravação', error);
     }
   };
 
@@ -155,7 +161,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
       setText('Gravando...');
       console.log('Gravação retomada ');
     } catch (error) {
-      console.error('Falha ao retomar a gravação', error);
+      console.log('Falha ao retomar a gravação', error);
     }
   };
 
@@ -175,7 +181,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
 
       setAudioFilePath('');
     } catch (error) {
-      console.error('Falha ao cancelar a gravação', error);
+      console.log('Falha ao cancelar a gravação', error);
     }
   };
 
@@ -196,7 +202,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
         groupAudioFiles.push(newAudioFile); // Adicionando o novo arquivo de áudio
         await AsyncStorage.setItem(name, JSON.stringify(groupAudioFiles)); // Salvando no AsyncStorage
       } catch (error) {
-        console.error('Erro ao salvar o novo arquivo de áudio:', error);
+        console.log('Erro ao salvar o novo arquivo de áudio:', error);
       }
 
       setTempAudioFilePath('');
@@ -212,7 +218,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
       // Iniciar a reprodução do novo áudio
       await audioRecorderPlayer.startPlayer(audioPath);
     } catch (error) {
-      console.error('Falha ao reproduzir o áudio', error);
+      console.log('Falha ao reproduzir o áudio', error);
     }
   };
 
@@ -298,8 +304,27 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   }, [isRecording, isPaused, pulseAnim]);
 
   useEffect(() => {
-    console.log('Componente GroupDetails desmontado');
-    // Lógica para interromper a gravação...
+    const backAction = () => {
+      cancelRecording();
+      // Retornar true para indicar que o evento de back foi manipulado
+      return true;
+    };
+
+    // Adicionar um listener para o evento de back
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    // Função que é executada quando o componente é desmontado
+    return () => {
+      // Remover o listener do evento de back
+      backHandler.remove();
+      // Cancelar a gravação ao sair da tela
+      cancelRecording();
+      console.log('Componente GroupDetails desmontado');
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
