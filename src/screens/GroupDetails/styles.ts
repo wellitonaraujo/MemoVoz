@@ -88,3 +88,34 @@ export const EditIcon = styled.Image`
   width: 30px;
   height: 30px;
 `;
+
+export const AudioPlayer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  width: ${width * 0.4}px;
+  height: ${height * 0.1}px;
+  color: ${colors.primary.s100};
+  width: 100%;
+  border-bottom-width: 0.4px;
+  border-bottom-color: ${colors.inputBorder.s100}; /* Cor da linha */
+`;
+
+export const AudioName = styled.Text`
+  flex: 1;
+  color: ${colors.white};
+  font-size: 20px;
+  margin-left: 20px;
+`;
+
+export const Play = styled.Image`
+  width: ${width * 0.05}px;
+  height: ${height * 0.05}px;
+  aspect-ratio: 1;
+`;
+
+export const Trash = styled.Image`
+  width: ${width * 0.025}px;
+  height: ${height * 0.025}px;
+  aspect-ratio: 1;
+  opacity: 0.2;
+`;

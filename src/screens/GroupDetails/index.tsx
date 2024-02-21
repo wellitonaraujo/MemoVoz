@@ -18,6 +18,11 @@ import {
   Container,
   Description,
   Title,
+  AudioName,
+  AudioPlayer,
+  ButtonContainer,
+  Play,
+  Trash,
 } from './styles';
 import RecordingAnimation from '../../components/RecordingAnimation';
 import {imgs} from '../imgs';
@@ -25,9 +30,10 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import SaveRecordingModal from '../../components/SaveRecordingModal';
 import InitialButton from '../../components/InitialButton';
 import colors from '../../styles/colors';
-import {AudioName, AudioPlayer, ButtonContainer, Play} from '../Home/styles';
+
 import {formatTime} from '../../Utils/formatTime';
 import {bytesToKiloBytes} from '../../Utils/bytesToKiloBytes';
+
 type RootStackParamList = {
   Home: undefined;
   NewRecording: undefined;
@@ -44,9 +50,12 @@ interface Props {
 }
 const audioRecorderPlayer = new AudioRecorderPlayer();
 
-const GroupDetails: React.FC<Props> = () => {
-  const route = useRoute();
-  const {name, description}: any = route.params;
+interface GroupDetailsProps {
+  route: {params: {groupId: string; name: string; description: string}};
+}
+
+const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
+  const {name, description} = route.params;
 
   const [pulseAnim] = useState(new Animated.Value(1));
   const [recordedAudioFiles, setRecordedAudioFiles] = useState<
@@ -85,51 +94,6 @@ const GroupDetails: React.FC<Props> = () => {
     setModalVisible(false);
   };
 
-  useEffect(() => {
-    const startAnimation = () => {
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(pulseAnim, {
-            toValue: 1.2,
-            duration: 500,
-            useNativeDriver: true,
-          }),
-          Animated.timing(pulseAnim, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-          }),
-        ]),
-      ).start();
-    };
-
-    const stopAnimation = () => {
-      pulseAnim.stopAnimation();
-      pulseAnim.setValue(1);
-    };
-
-    if (isRecording && !isPaused) {
-      startAnimation();
-      timerRef.current = setInterval(() => {
-        setCount(prevCount => prevCount + 1);
-      }, 1000);
-    } else {
-      if (!isPaused) {
-        stopAnimation();
-      }
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    }
-
-    return () => {
-      stopAnimation();
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [isRecording, isPaused, pulseAnim]);
-
   const generateAudioFilePath = () => {
     const randomNumber = Math.floor(Math.random() * 1000) + 1; // Gera um número aleatório entre 1 e 1000
     console.log(randomNumber);
@@ -142,7 +106,7 @@ const GroupDetails: React.FC<Props> = () => {
       const recordAudioPermission = await check(
         PERMISSIONS.ANDROID.RECORD_AUDIO,
       );
-      console.log('Permissão de gravação de áudio FOI concedida');
+
       // Verificar se a permissão de gravação de áudio foi concedida
       if (recordAudioPermission !== RESULTS.GRANTED) {
         // Se não foi concedida, solicitar permissão ao usuário
@@ -215,60 +179,128 @@ const GroupDetails: React.FC<Props> = () => {
     }
   };
 
-  const addRecording = (name: string) => {
-    if (name && tempAudioFilePath) {
+  const addRecording = async (recordingName: string) => {
+    if (recordingName && tempAudioFilePath) {
       const newAudioFile = {
-        name,
+        name: recordingName,
         path: tempAudioFilePath,
       };
-      // Adiciona o novo áudio à lista de gravações
-      const updatedRecordedAudioFiles = [...recordedAudioFiles, newAudioFile];
-      setRecordedAudioFiles(updatedRecordedAudioFiles);
+      setRecordedAudioFiles(prevFiles => [...prevFiles, newAudioFile]);
+
+      // Salvando o novo arquivo de áudio no AsyncStorage
+      try {
+        const groupAudioFilesJSON = await AsyncStorage.getItem(name); // Obtendo os arquivos de áudio existentes
+        let groupAudioFiles = groupAudioFilesJSON
+          ? JSON.parse(groupAudioFilesJSON)
+          : [];
+        groupAudioFiles.push(newAudioFile); // Adicionando o novo arquivo de áudio
+        await AsyncStorage.setItem(name, JSON.stringify(groupAudioFiles)); // Salvando no AsyncStorage
+      } catch (error) {
+        console.error('Erro ao salvar o novo arquivo de áudio:', error);
+      }
+
       setTempAudioFilePath('');
       setCount(0);
       closeModal();
-
-      // Salva a lista atualizada no AsyncStorage
-      AsyncStorage.setItem(
-        'recordedAudioFiles',
-        JSON.stringify(updatedRecordedAudioFiles),
-      )
-        .then(() =>
-          console.log('Novo áudio adicionado com sucesso ao AsyncStorage'),
-        )
-        .catch(error =>
-          console.error('Erro ao salvar novo áudio no AsyncStorage:', error),
-        );
     }
   };
 
-  useEffect(() => {
-    const fetchRecordedAudioFiles = async () => {
-      try {
-        // Carrega a lista de áudios gravados do AsyncStorage
-        const storedRecordedAudioFiles = await AsyncStorage.getItem(
-          'recordedAudioFiles',
-        );
-        if (storedRecordedAudioFiles) {
-          setRecordedAudioFiles(JSON.parse(storedRecordedAudioFiles));
-        }
-      } catch (error) {
-        console.error(
-          'Erro ao carregar áudios gravados do AsyncStorage:',
-          error,
-        );
-      }
-    };
-
-    fetchRecordedAudioFiles();
-  }, []);
   const playRecording = async (audioPath: string) => {
     try {
+      // Parar a reprodução do áudio atual antes de iniciar outro
+      await audioRecorderPlayer.stopPlayer();
+      // Iniciar a reprodução do novo áudio
       await audioRecorderPlayer.startPlayer(audioPath);
     } catch (error) {
       console.error('Falha ao reproduzir o áudio', error);
     }
   };
+
+  // Função para excluir um arquivo de áudio
+  const deleteRecording = async (index: number) => {
+    const updatedAudioFiles = [...recordedAudioFiles];
+    updatedAudioFiles.splice(index, 1);
+    setRecordedAudioFiles(updatedAudioFiles);
+
+    // Atualizando o AsyncStorage após a exclusão
+    try {
+      await AsyncStorage.setItem(name, JSON.stringify(updatedAudioFiles));
+    } catch (error) {
+      console.error(
+        'Erro ao excluir o arquivo de áudio do AsyncStorage:',
+        error,
+      );
+    }
+  };
+
+  useEffect(() => {
+    // Função para carregar os arquivos de áudio do AsyncStorage ao montar o componente
+    const loadRecordedAudioFiles = async () => {
+      try {
+        const groupAudioFilesJSON = await AsyncStorage.getItem(name); // Usando o nome do grupo como chave
+        if (groupAudioFilesJSON) {
+          const groupAudioFiles = JSON.parse(groupAudioFilesJSON);
+          setRecordedAudioFiles(groupAudioFiles);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar arquivos de áudio:', error);
+      }
+    };
+
+    loadRecordedAudioFiles(); // Carregar arquivos de áudio ao montar o componente
+
+    return () => {};
+  }, [name]);
+
+  useEffect(() => {
+    const startAnimation = () => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1.2,
+            duration: 500,
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start();
+    };
+
+    const stopAnimation = () => {
+      pulseAnim.stopAnimation();
+      pulseAnim.setValue(1);
+    };
+
+    if (isRecording && !isPaused) {
+      startAnimation();
+      timerRef.current = setInterval(() => {
+        setCount(prevCount => prevCount + 1);
+      }, 1000);
+    } else {
+      if (!isPaused) {
+        stopAnimation();
+      }
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    }
+
+    return () => {
+      stopAnimation();
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [isRecording, isPaused, pulseAnim]);
+
+  useEffect(() => {
+    console.log('Componente GroupDetails desmontado');
+    // Lógica para interromper a gravação...
+  }, []);
 
   return (
     <Container>
@@ -325,6 +357,10 @@ const GroupDetails: React.FC<Props> = () => {
                 <Play source={icons.playiconButon} />
               </Pressable>
               <AudioName>{audio.name}</AudioName>
+
+              <Pressable onPress={() => deleteRecording(index)}>
+                <Trash source={icons.trashicon} />
+              </Pressable>
             </AudioPlayer>
           ))}
       </ScrollView>

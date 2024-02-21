@@ -12,6 +12,7 @@ import {icons} from '../icons';
 import {useNavigation} from '@react-navigation/native';
 
 interface GroupCardProps {
+  groupId: string;
   name: string;
   description: string;
   onDelete?: () => void;
@@ -19,7 +20,7 @@ interface GroupCardProps {
 }
 
 const GroupCard: React.FC<GroupCardProps> = ({
-  cancelledAudioFilePath,
+  groupId,
   name,
   description,
   onDelete,
@@ -33,6 +34,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
 
   const handlePress = () => {
     navigation.navigate('GroupDetails', {
+      groupId,
       name,
       description,
     });
