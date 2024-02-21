@@ -1,8 +1,8 @@
-import {Pressable, Modal, Text, Image} from 'react-native';
+import {Pressable, Modal} from 'react-native';
 import PrimaryButton from '../PrimaryButton';
 import colors from '../../styles/colors';
 import {icons} from '../icons';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   TextInputWithBorderBottom,
   ModalContainer,
@@ -41,6 +41,18 @@ const SaveRecordingModal: React.FC<SaveRecordingModalProps> = ({
   });
 
   const {date, duration, fileSize} = recordingInfo;
+
+  const [error, setError] = useState<string>('');
+
+  const onSave = () => {
+    if (!recordingName) {
+      setError('O campo Nome é obrigatório.');
+      return;
+    }
+    setError('');
+    addRecording(recordingName);
+    onClose();
+  };
   return (
     <Modal
       animationType="slide"
@@ -58,7 +70,10 @@ const SaveRecordingModal: React.FC<SaveRecordingModalProps> = ({
             onChangeText={setRecordingName}
             maxLength={24}
           />
-
+          {recordingName.length > 23 && (
+            <ErrorLength>O nome do áudio não pode ser vazio.</ErrorLength>
+          )}
+          {error ? <ErrorLength>{error}</ErrorLength> : null}
           <InfoTitle>Informações</InfoTitle>
 
           <Title>Data da gravação:</Title>
@@ -79,11 +94,8 @@ const SaveRecordingModal: React.FC<SaveRecordingModalProps> = ({
             <ValueTitle>{fileSize}</ValueTitle>
           </InfosContainer>
 
-          {recordingName.length > 23 && (
-            <ErrorLength>O nome do áudio não pode ser vazio.</ErrorLength>
-          )}
           <ButtonsContainer>
-            <PrimaryButton title="Salvar" onPress={handleSave} />
+            <PrimaryButton title="Salvar" onPress={onSave} />
             <PrimaryButton
               title="Excluír"
               backgroundColor={colors.grey.s100}

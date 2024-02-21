@@ -10,7 +10,9 @@ export const Container = styled.View`
   background-color: ${colors.background};
   padding: 20px;
   flex-direction: column;
+  justify-content: space-around;
 `;
+
 export const Logo = styled.Image`
   width: ${width * 0.3}px;
   height: ${height * 0.3}px;
@@ -23,7 +25,7 @@ export const RecordingContainer = styled.View`
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  padding-bottom: ${height * 0.04}px;
+  margin-top: ${height * 0.1}px;
 `;
 
 export const CancelButton = styled.Image`
@@ -39,20 +41,19 @@ export const RecordingButton = styled.Image`
   aspect-ratio: 1;
 `;
 
-export const RecordingSection = styled.View`
-  align-items: center;
-`;
-
 export const RecordingTitle = styled.Text`
   color: ${colors.white};
   font-size: ${RFValue(20)}px;
+  align-self: center;
+  margin-top: 50px;
 `;
 
 export const RecordingCount = styled.Text`
   color: ${colors.white};
-  font-size: ${RFValue(70)}px;
+  font-size: ${RFValue(65)}px;
   align-self: center;
-  padding-top: 10%;
+
+  padding: 50px;
 `;
 
 export const ButtonContainer = styled.View`
@@ -71,7 +72,7 @@ export const Title = styled.Text`
   font-family: 'Poppins-Regular';
   color: ${colors.grey.s200};
   align-self: center;
-  padding-top: 30px;
+  margin-top: ${height * 0.011}px;
 `;
 
 export const Description = styled.Text`

@@ -11,6 +11,7 @@ const useSaveRecordingModal = ({
 }: SaveRecordingModalProps) => {
   const [visible, setVisible] = useState(false);
   const [recordingName, setRecordingName] = useState('');
+  const [error, setError] = useState<string>('');
 
   const openModal = () => {
     setVisible(true);
@@ -19,20 +20,25 @@ const useSaveRecordingModal = ({
   const closeModal = () => {
     setVisible(false);
     setRecordingName('');
+    setError('');
     onClose();
   };
 
   const handleSave = () => {
-    if (recordingName) {
-      addRecording(recordingName); // Passa apenas o nome do áudio
-      setRecordingName('');
-      closeModal();
+    if (!recordingName) {
+      setError('O campo Nome é obrigatório.');
+      return;
     }
+    addRecording(recordingName); // Passa apenas o nome do áudio
+    setRecordingName('');
+    setError('');
+    closeModal();
   };
 
   return {
     visible,
     recordingName,
+    error,
 
     openModal,
     closeModal,

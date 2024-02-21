@@ -5,6 +5,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {icons} from '../../components/icons';
 import {Animated, Pressable} from 'react-native';
 import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import RNFS from 'react-native-fs';
 import {
@@ -25,6 +26,8 @@ import SaveRecordingModal from '../../components/SaveRecordingModal';
 import InitialButton from '../../components/InitialButton';
 import colors from '../../styles/colors';
 import {AudioName, AudioPlayer, ButtonContainer, Play} from '../Home/styles';
+import {formatTime} from '../../Utils/formatTime';
+import {bytesToKiloBytes} from '../../Utils/bytesToKiloBytes';
 type RootStackParamList = {
   Home: undefined;
   NewRecording: undefined;
@@ -62,10 +65,6 @@ const GroupDetails: React.FC<Props> = () => {
     duration: '',
     fileSize: '',
   });
-
-  const bytesToKiloBytes = (bytes: number): string => {
-    return (bytes / 1024).toFixed(2) + ' kB';
-  };
 
   // Função para abrir o modal
   const openModal = async () => {
@@ -222,13 +221,47 @@ const GroupDetails: React.FC<Props> = () => {
         name,
         path: tempAudioFilePath,
       };
-      setRecordedAudioFiles(prevFiles => [...prevFiles, newAudioFile]);
+      // Adiciona o novo áudio à lista de gravações
+      const updatedRecordedAudioFiles = [...recordedAudioFiles, newAudioFile];
+      setRecordedAudioFiles(updatedRecordedAudioFiles);
       setTempAudioFilePath('');
       setCount(0);
       closeModal();
+
+      // Salva a lista atualizada no AsyncStorage
+      AsyncStorage.setItem(
+        'recordedAudioFiles',
+        JSON.stringify(updatedRecordedAudioFiles),
+      )
+        .then(() =>
+          console.log('Novo áudio adicionado com sucesso ao AsyncStorage'),
+        )
+        .catch(error =>
+          console.error('Erro ao salvar novo áudio no AsyncStorage:', error),
+        );
     }
   };
 
+  useEffect(() => {
+    const fetchRecordedAudioFiles = async () => {
+      try {
+        // Carrega a lista de áudios gravados do AsyncStorage
+        const storedRecordedAudioFiles = await AsyncStorage.getItem(
+          'recordedAudioFiles',
+        );
+        if (storedRecordedAudioFiles) {
+          setRecordedAudioFiles(JSON.parse(storedRecordedAudioFiles));
+        }
+      } catch (error) {
+        console.error(
+          'Erro ao carregar áudios gravados do AsyncStorage:',
+          error,
+        );
+      }
+    };
+
+    fetchRecordedAudioFiles();
+  }, []);
   const playRecording = async (audioPath: string) => {
     try {
       await audioRecorderPlayer.startPlayer(audioPath);
@@ -237,21 +270,15 @@ const GroupDetails: React.FC<Props> = () => {
     }
   };
 
-  const formatTime = (seconds: number): string => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes < 10 ? '0' : ''}${minutes}:${
-      remainingSeconds < 10 ? '0' : ''
-    }${remainingSeconds}`;
-  };
-
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Title>{name}</Title>
-        <Description>{description}</Description>
-
-        {/* Exibir seção de gravação apenas quando estiver gravando */}
+        {!isRecording && (
+          <>
+            <Description>{description}</Description>
+          </>
+        )}
         {isRecording && (
           <>
             <RecordingCount>{formatTime(count)}</RecordingCount>
@@ -261,6 +288,7 @@ const GroupDetails: React.FC<Props> = () => {
               <Logo source={imgs.logo} />
             )}
             <RecordingTitle>{text}</RecordingTitle>
+
             <RecordingContainer>
               {isRecording && !isPaused ? (
                 <>
@@ -292,21 +320,14 @@ const GroupDetails: React.FC<Props> = () => {
         {/* Listar gravações existentes apenas se não estiver gravando */}
         {!isRecording &&
           recordedAudioFiles.map((audio, index) => (
-            <AudioPlayer>
-              <Pressable key={index} onPress={() => playRecording(audio.path)}>
+            <AudioPlayer key={index}>
+              <Pressable onPress={() => playRecording(audio.path)}>
                 <Play source={icons.playiconButon} />
               </Pressable>
               <AudioName>{audio.name}</AudioName>
             </AudioPlayer>
           ))}
       </ScrollView>
-      <SaveRecordingModal
-        visible={modalVisible}
-        onClose={closeModal}
-        addRecording={addRecording}
-        recordingInfo={recordingInfo}
-      />
-
       {/* Exibir botão de gravação inicial apenas se não estiver gravando */}
       {!isRecording && (
         <ButtonContainer>
@@ -317,6 +338,13 @@ const GroupDetails: React.FC<Props> = () => {
           />
         </ButtonContainer>
       )}
+
+      <SaveRecordingModal
+        visible={modalVisible}
+        onClose={closeModal}
+        addRecording={addRecording}
+        recordingInfo={recordingInfo}
+      />
     </Container>
   );
 };

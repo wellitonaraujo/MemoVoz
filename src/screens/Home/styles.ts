@@ -39,13 +39,15 @@ export const AudioPlayer = styled.View`
   height: ${height * 0.1}px;
   color: ${colors.primary.s100};
   width: 100%;
+  border-bottom-width: 0.4px;
+  border-bottom-color: ${colors.inputBorder.s100}; /* Cor da linha */
 `;
 
 export const AudioName = styled.Text`
   flex: 1;
   color: ${colors.white};
-  font-size: 23px;
-  margin-left: 10px;
+  font-size: 20px;
+  margin-left: 20px;
 `;
 
 export const Play = styled.Image`

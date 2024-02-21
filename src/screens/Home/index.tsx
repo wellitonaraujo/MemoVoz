@@ -19,7 +19,6 @@ const Home: React.FC<Props> = ({navigation}) => {
     modalVisible,
     handlePress,
     onClose,
-    goNewRecording,
     groupCards,
     addGroupCard,
     handleSearch,
