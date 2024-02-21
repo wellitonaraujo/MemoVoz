@@ -53,7 +53,9 @@ export const TextAreaWithBorder = styled.TextInput`
   border-radius: 6px;
 `;
 
-export const ButtonsContainer = styled.View``;
+export const ButtonsContainer = styled.View`
+  margin-top: 50px;
+`;
 
 export const ErrorLength = styled.Text`
   color: ${colors.error.s200};

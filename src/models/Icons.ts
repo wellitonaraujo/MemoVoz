@@ -17,6 +17,7 @@ export interface Icons {
   clockicon: ImageSourcePropType;
   fileicon: ImageSourcePropType;
   playiconButon: ImageSourcePropType;
+  pauseiconButon: ImageSourcePropType;
 }
 
 export interface InitialButtonProps {
