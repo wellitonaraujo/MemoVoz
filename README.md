@@ -3,9 +3,23 @@ VoiceMemo é um aplicativo em desenvolvimento que tem como objetivo permitir aos
 
 ## O projeto VoiceMemo está atualmente em desenvolvimento. 
 
-Algumas funcionalidades principais já foram implementadas, como a gravação a criação, exclusão e detalhes de grupos. No entanto, ainda há muito trabalho a ser feito antes que o aplicativo esteja pronto para ser lançado ao público.
+Algumas funcionalidades principais já foram implementadas, como:
+- Gravação de áudio
+- Criação, exclusão e detalhes de grupos
+
+ Além disso, foram desenvolvidas funcionalidades para:
+
+- Salvar áudio
+- - Exclusão de áudio
+- Dar nome aos áudios gravados
+- Possibilidade de ouvir o/os audios
+- Visualizar informações como duração, data e tamanho do arquivo
+
 
 ## Tecnologias Utilizadas
- - React Native: O aplicativo está sendo desenvolvido utilizando o framework React Native para criar uma experiência nativa em dispositivos móveis.
+- React Native: O aplicativo está sendo desenvolvido utilizando o framework React Native para criar uma experiência nativa em dispositivos móveis.
 - TypeScript: TypeScript está sendo utilizado para adicionar tipagem estática ao código, proporcionando uma experiência de desenvolvimento mais segura e robusta.
 - Styled Components: Styled Components está sendo utilizado para estilizar os componentes do aplicativo de forma modular e reutilizável.
+- Async Storage: Utilizamos o Async Storage para armazenamento local de dados no aplicativo.
+- react-native-audio-recorder-player: Esta biblioteca foi utilizada para implementar funcionalidades de gravação e reprodução de áudio.
+- react-native-fs: O react-native-fs foi utilizado para operações de sistema de arquivos no React Native.
