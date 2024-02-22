@@ -48,7 +48,7 @@ const OptionsRecordingModal: React.FC<OptionsRecordingModalProps> = ({
       onRequestClose={onClose}>
       <TouchableWithoutFeedback onPress={onClose}>
         <ModalContainer>
-          <TouchableWithoutFeedback onPress={onClose}>
+          <TouchableWithoutFeedback onPress={() => {}}>
             <ModalContent>
               <Title>Data da gravação:</Title>
               <InfosContainer>
