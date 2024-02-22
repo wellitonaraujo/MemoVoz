@@ -1,39 +1,37 @@
 // GroupDetails.tsx
-import React, {useEffect, useRef, useState} from 'react';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {icons} from '../../components/icons';
-import {Animated, BackHandler, Pressable} from 'react-native';
-import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AudioRecorderPlayer from 'react-native-audio-recorder-player';
-import RNFS from 'react-native-fs';
-import {
-  CancelButton,
-  Logo,
-  RecordingButton,
-  RecordingContainer,
-  RecordingCount,
-  RecordingTitle,
-  Container,
-  Description,
-  Title,
-  AudioName,
-  AudioPlayer,
-  ButtonContainer,
-  Play,
-  Trash,
-} from './styles';
-import RecordingAnimation from '../../components/RecordingAnimation';
-import {imgs} from '../imgs';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import SaveRecordingModal from '../../components/SaveRecordingModal';
+import RecordingAnimation from '../../components/RecordingAnimation';
+import {Animated, BackHandler, Pressable} from 'react-native';
 import InitialButton from '../../components/InitialButton';
-import colors from '../../styles/colors';
-
+import {StackScreenProps} from '@react-navigation/stack';
 import {formatTime} from '../../Utils/formatTime';
-import {bytesToKiloBytes} from '../../Utils/bytesToKiloBytes';
 import useRecording from './hook/useRecording';
+import React, {useEffect, useRef} from 'react';
+import {icons} from '../../components/icons';
+import colors from '../../styles/colors';
+import {imgs} from '../imgs';
+import {
+  RecordingContainer,
+  ButtonContainer,
+  RecordingButton,
+  RecordingCount,
+  RecordingTitle,
+  CancelButton,
+  AudioPlayer,
+  Description,
+  Container,
+  AudioName,
+  Title,
+  Trash,
+  Logo,
+  Play,
+} from './styles';
+
+interface GroupDetailsProps {
+  navigation: GroupDetailsScreenProps;
+  route: {params: {groupId: string; name: string; description: string}};
+}
 
 type RootStackParamList = {
   Home: undefined;
@@ -41,18 +39,10 @@ type RootStackParamList = {
   GroupDetails: {name: string; description: string};
 };
 
-type GroupDetailsScreenNavigationProp = StackNavigationProp<
+type GroupDetailsScreenProps = StackScreenProps<
   RootStackParamList,
   'GroupDetails'
 >;
-
-interface Props {
-  navigation: GroupDetailsScreenNavigationProp;
-}
-
-interface GroupDetailsProps {
-  route: {params: {groupId: string; name: string; description: string}};
-}
 
 const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   const {name, description} = route.params;
