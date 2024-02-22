@@ -18,4 +18,6 @@ export const icons: Icons = {
   fileicon: require('../assets/icons/file.png'),
   playiconButon: require('../assets/icons/ButtonPlay.png'),
   pauseiconButon: require('../assets/icons/ButtonPause.png'),
+  menuIcon: require('../assets/icons/menuicon.png'),
+  shareIcon: require('../assets/icons/shareicon.png'),
 };

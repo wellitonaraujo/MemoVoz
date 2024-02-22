@@ -18,6 +18,8 @@ export interface Icons {
   fileicon: ImageSourcePropType;
   playiconButon: ImageSourcePropType;
   pauseiconButon: ImageSourcePropType;
+  menuIcon: ImageSourcePropType;
+  shareIcon: ImageSourcePropType;
 }
 
 export interface InitialButtonProps {

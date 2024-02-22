@@ -7,7 +7,7 @@ import InitialButton from '../../components/InitialButton';
 import {StackScreenProps} from '@react-navigation/stack';
 import {formatTime} from '../../Utils/formatTime';
 import useRecording from './hook/useRecording';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {icons} from '../../components/icons';
 import colors from '../../styles/colors';
 import {imgs} from '../imgs';
@@ -23,10 +23,11 @@ import {
   Container,
   AudioName,
   Title,
-  Trash,
   Logo,
   Play,
+  Icon,
 } from './styles';
+import OptionsRecordingModal from '../../components/OptionsRecordingModal';
 
 interface GroupDetailsProps {
   navigation: GroupDetailsScreenProps;
@@ -58,6 +59,9 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     cancelRecording,
     addRecording,
     deleteRecording,
+    modalOptionsVisible,
+    closeOptionsModal,
+    optionsRecording,
     playRecording,
     stopRecording,
     modalVisible,
@@ -66,6 +70,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     closeModal,
     recordingInfo,
     text,
+    selectedIndex,
     setCount,
   } = useRecording(name);
 
@@ -138,6 +143,8 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [audioUrl, setAudioUrl] = useState<string>('');
+
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -209,8 +216,8 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
               </Pressable>
               <AudioName>{audio.name}</AudioName>
 
-              <Pressable onPress={() => deleteRecording(index)}>
-                <Trash source={icons.trashicon} />
+              <Pressable onPress={optionsRecording}>
+                <Icon source={icons.menuIcon} />
               </Pressable>
             </AudioPlayer>
           ))}
@@ -225,6 +232,14 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
           />
         </ButtonContainer>
       )}
+
+      <OptionsRecordingModal
+        visible={modalOptionsVisible}
+        onClose={closeOptionsModal}
+        deleteRecording={deleteRecording}
+        selectedIndex={selectedIndex}
+        recordingInfo={recordingInfo}
+      />
 
       <SaveRecordingModal
         visible={modalVisible}

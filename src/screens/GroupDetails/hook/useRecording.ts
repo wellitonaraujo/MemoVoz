@@ -27,7 +27,8 @@ const useRecording = (name: string) => {
   const [text, setText] = useState('Toque no botão para começar');
   const [audioFilePath, setAudioFilePath] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [modalOptionsVisible, setModalOptionVisible] = useState(false);
+  const [selectedIndex] = useState<number>(0);
   const [recordingInfo, setRecordingInfo] = useState({
     date: '',
     duration: '',
@@ -45,6 +46,12 @@ const useRecording = (name: string) => {
         const fileStat = await RNFS.stat(audioFilePath);
         const fileSize = bytesToKiloBytes(fileStat.size);
         setRecordingInfo({date, duration, fileSize});
+
+        // Salvar informações de gravação no AsyncStorage
+        await AsyncStorage.setItem(
+          'recordingInfo',
+          JSON.stringify({date, duration, fileSize}),
+        );
       } else {
         console.log('O arquivo de áudio não existe mais');
       }
@@ -219,6 +226,34 @@ const useRecording = (name: string) => {
     return () => {};
   }, [name]);
 
+  const loadRecordingInfo = async () => {
+    try {
+      const recordingInfoJSON = await AsyncStorage.getItem('recordingInfo');
+      if (recordingInfoJSON) {
+        const recordingInfo = JSON.parse(recordingInfoJSON);
+        setRecordingInfo(recordingInfo);
+      }
+    } catch (error) {
+      console.log('Erro ao carregar as informações de gravação:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadRecordingInfo();
+  }, []);
+
+  const optionsRecording = async () => {
+    openOptionsModal();
+  };
+
+  const openOptionsModal = () => {
+    setModalOptionVisible(true);
+  };
+
+  const closeOptionsModal = () => {
+    setModalOptionVisible(false);
+  };
+
   return {
     recordedAudioFiles,
     tempAudioFilePath,
@@ -230,6 +265,7 @@ const useRecording = (name: string) => {
     text,
     audioFilePath,
     recordingInfo,
+    optionsRecording,
     startRecording,
     pauseRecording,
     resumeRecording,
@@ -239,8 +275,11 @@ const useRecording = (name: string) => {
     playRecording,
     stopRecording,
     modalVisible,
+    modalOptionsVisible,
     closeModal,
+    closeOptionsModal,
     setCount,
+    selectedIndex,
   };
 };
 
