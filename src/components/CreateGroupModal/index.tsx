@@ -1,18 +1,18 @@
 import useCreateGroup from './hook/useCreateGroup';
-import {Pressable, Modal, Text} from 'react-native';
+import {Modal, Text, View} from 'react-native';
 import PrimaryButton from '../PrimaryButton';
 import colors from '../../styles/colors';
-import {icons} from '../icons';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   TextInputWithBorderBottom,
   TextAreaWithBorder,
   ModalContainer,
   ModalContent,
-  CloseIcon,
   ButtonsContainer,
   ErrorLength,
+  Title,
 } from './styles';
+import {TouchableWithoutFeedback} from 'react-native';
 
 interface CreateGroupModalProps {
   visible: boolean;
@@ -31,46 +31,53 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
     handleSave,
     setGroupName,
     setGroupDescription,
+    error,
+    closeModal,
   } = useCreateGroup({onClose, addGroupCard});
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={visible}
-      onRequestClose={onClose}>
-      <ModalContainer>
-        <ModalContent>
-          <Pressable onPress={onClose}>
-            <CloseIcon source={icons.closeicon} />
-          </Pressable>
-          <TextInputWithBorderBottom
-            placeholder="Nome"
-            value={groupName}
-            onChangeText={setGroupName}
-            maxLength={24}
-          />
-          {groupName.length > 23 && (
-            <ErrorLength>
-              O nome do grupo não pode ter mais de 24 caracteres.
-            </ErrorLength>
-          )}
-          <TextAreaWithBorder
-            placeholder="Descrição"
-            multiline={false}
-            value={groupDescription}
-            onChangeText={setGroupDescription}
-          />
-          <ButtonsContainer>
-            <PrimaryButton title="Salvar" onPress={handleSave} />
-            <PrimaryButton
-              title="Cancelar"
-              backgroundColor={colors.grey.s100}
-              textColor={colors.primary.s300}
-              onPress={onClose}
-            />
-          </ButtonsContainer>
-        </ModalContent>
-      </ModalContainer>
+      onRequestClose={closeModal}>
+      <TouchableWithoutFeedback onPress={closeModal}>
+        <ModalContainer>
+          <TouchableWithoutFeedback onPress={() => {}}>
+            <ModalContent>
+              <Title>Novo grupo</Title>
+              <TextInputWithBorderBottom
+                placeholder="Nome"
+                value={groupName}
+                onChangeText={setGroupName}
+                maxLength={24}
+                placeholderTextColor={colors.grey.s200}
+              />
+              {groupName.length > 23 && (
+                <ErrorLength>
+                  O nome do grupo não pode ter mais de 24 caracteres.
+                </ErrorLength>
+              )}
+              {error ? <ErrorLength>{error}</ErrorLength> : <Text>{''}</Text>}
+              <TextAreaWithBorder
+                placeholder="Descrição"
+                multiline={false}
+                value={groupDescription}
+                onChangeText={setGroupDescription}
+                placeholderTextColor={colors.grey.s200}
+              />
+              <ButtonsContainer>
+                <PrimaryButton
+                  title="Salvar"
+                  onPress={handleSave}
+                  backgroundColor={colors.grey.s100}
+                  textColor={colors.primary.s300}
+                />
+              </ButtonsContainer>
+            </ModalContent>
+          </TouchableWithoutFeedback>
+        </ModalContainer>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };

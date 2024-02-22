@@ -43,7 +43,8 @@ export const RecordingButton = styled.Image`
 
 export const RecordingTitle = styled.Text`
   color: ${colors.white};
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(18)}px;
+  font-family: 'Poppins-ExtraLight';
   align-self: center;
   margin-top: 50px;
 `;
@@ -52,7 +53,7 @@ export const RecordingCount = styled.Text`
   color: ${colors.white};
   font-size: ${RFValue(65)}px;
   align-self: center;
-
+  font-family: 'Poppins-ExtraLight';
   padding: 50px;
 `;
 
@@ -105,6 +106,7 @@ export const AudioName = styled.Text`
   color: ${colors.white};
   font-size: 20px;
   margin-left: 20px;
+  font-family: 'Poppins-Light';
 `;
 
 export const Play = styled.Image`

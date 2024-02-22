@@ -6,20 +6,20 @@ export const ButtonContainer = styled(TouchableOpacity)<{
   borderColor?: string;
   backgroundColor?: string;
 }>`
-  height: 54px;
+  height: 50px;
   width: 100%;
-  border-radius: 25px;
-  margin-top: 20px;
+  border-radius: 8px;
+  margin-top: 16px;
   justify-content: center;
-  border-color: ${({borderColor}) => borderColor || colors.grey.s100};
+  border-color: ${({borderColor}) => borderColor || colors.grey.s400};
   border-width: 1px;
   background-color: ${({backgroundColor}) =>
-    backgroundColor || colors.primary.s100};
+    backgroundColor || colors.inputBorder.s100};
 `;
 
 export const ButtonText = styled.Text<{textColor?: string}>`
   color: ${({textColor}) => textColor || colors.white};
   font-family: 'Poppins-Light';
   text-align: center;
-  font-size: 17px;
+  font-size: 16px;
 `;

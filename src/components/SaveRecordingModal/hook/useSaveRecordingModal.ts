@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 interface SaveRecordingModalProps {
   onClose: () => void;
-  addRecording: (name: string) => void; // Alterado para aceitar apenas uma string
+  addRecording: (name: string) => void;
 }
 
 const useSaveRecordingModal = ({
@@ -26,7 +26,7 @@ const useSaveRecordingModal = ({
 
   const handleSave = () => {
     if (!recordingName) {
-      setError('O campo Nome é obrigatório.');
+      setError('Por favor, preencha o campo Nome.');
       return;
     }
     addRecording(recordingName);
@@ -39,7 +39,6 @@ const useSaveRecordingModal = ({
     visible,
     recordingName,
     error,
-
     openModal,
     closeModal,
     handleSave,

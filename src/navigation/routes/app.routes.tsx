@@ -38,12 +38,10 @@ const AppRoutes: React.FC = () => (
         name="GroupDetails"
         component={GroupDetails}
         options={{
-          headerStyle: {
-            backgroundColor: colors.background,
-          },
-          headerTitle: 'Detalhes do Grupo',
+          headerTransparent: true,
+          headerTitle: '',
+          headerBackTitleVisible: false,
           headerTintColor: colors.white,
-          headerTitleAlign: 'center',
         }}
       />
     </Stack.Navigator>

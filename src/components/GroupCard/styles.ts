@@ -51,3 +51,9 @@ export const ArronIcon = styled.Image`
   width: 20px;
   height: 20px;
 `;
+
+export const TrashIcon = styled.Image`
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+`;

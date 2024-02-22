@@ -3,13 +3,13 @@ import colors from '../../styles/colors';
 
 export const ModalContainer = styled.View`
   flex: 1;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: flex-end;
   align-items: center;
 `;
 
 export const ModalContent = styled.View`
-  background-color: ${colors.white};
+  background-color: ${colors.background};
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   padding: 20px;
@@ -29,20 +29,19 @@ export const CloseIcon = styled.Image`
 export const TextInputWithBorderBottom = styled.TextInput`
   border-bottom-width: 1px;
   border-bottom-color: ${colors.primary.s100};
-
+  background-color: ${colors.inputBorder.s100};
   font-family: 'Poppins-ExtraLight';
   padding-left: 10px;
   margin-top: 20px;
   border-radius: 6px;
-  font-size: 18px;
-  opacity: 0.6;
+  font-size: 16px;
 `;
 
 export const ButtonsContainer = styled.View``;
 
 export const ErrorLength = styled.Text`
-  color: ${colors.error.s200};
-  font-size: 12px;
+  color: red;
+  font-size: 13px;
 `;
 
 export const Icon = styled.Image`
@@ -51,25 +50,25 @@ export const Icon = styled.Image`
 `;
 
 export const InfoTitle = styled.Text`
-  color: ${colors.primary.s100};
+  color: ${colors.grey.s200};
   font-size: 22px;
   font-family: 'Poppins-Light';
-  padding: 20px 0 15px 0;
+  padding: 25px 0 25px 0;
 `;
 
 export const InfosContainer = styled.View`
   flex-direction: row;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   align-items: center;
 `;
 
 export const Title = styled.Text`
-  color: ${colors.primary.s100};
-  font-size: 18px;
+  color: ${colors.grey.s200};
+  font-size: 19px;
   margin-bottom: 8px;
 `;
 export const ValueTitle = styled.Text`
-  color: ${colors.grey.s300};
+  color: ${colors.grey.s200};
   font-size: 18px;
   font-family: 'Poppins-ExtraLight';
   margin-left: 10px;

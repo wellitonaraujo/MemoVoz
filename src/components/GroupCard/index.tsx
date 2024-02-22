@@ -7,6 +7,7 @@ import {
   InfoContainer,
   Title,
   TitleCard,
+  TrashIcon,
 } from './styles';
 import {icons} from '../icons';
 import {useNavigation} from '@react-navigation/native';
@@ -42,7 +43,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
   return (
     <Container>
       <IconContainer onPress={onDelete}>
-        <ArronIcon source={icons.trashicon} />
+        <TrashIcon source={icons.trashicon} />
       </IconContainer>
       <InfoContainer>
         <TitleCard>
