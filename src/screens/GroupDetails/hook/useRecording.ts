@@ -1,10 +1,9 @@
-import {useState, useEffect, useRef} from 'react';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import {bytesToKiloBytes} from '../../../Utils/bytesToKiloBytes';
 import {formatTime} from '../../../Utils/formatTime';
-import {BackHandler, Animated} from 'react-native';
+import {useState, useEffect} from 'react';
 import RNFS from 'react-native-fs';
 
 type RecordedAudioFile = {
