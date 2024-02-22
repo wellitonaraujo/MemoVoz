@@ -115,9 +115,8 @@ export const Play = styled.Image`
   aspect-ratio: 1;
 `;
 
-export const Trash = styled.Image`
+export const Icon = styled.Image`
   width: ${width * 0.025}px;
   height: ${height * 0.025}px;
   aspect-ratio: 1;
-  opacity: 0.2;
 `;
