@@ -10,7 +10,7 @@ Algumas funcionalidades principais já foram implementadas, como:
  Além disso, foram desenvolvidas funcionalidades para:
 
 - Salvar áudio
-- - Exclusão de áudio
+- Exclusão de áudio
 - Dar nome aos áudios gravados
 - Possibilidade de ouvir o/os audios
 - Visualizar informações como duração, data e tamanho do arquivo
