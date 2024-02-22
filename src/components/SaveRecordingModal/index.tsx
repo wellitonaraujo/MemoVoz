@@ -1,4 +1,4 @@
-import {Pressable, Modal} from 'react-native';
+import {Modal, Text, TouchableWithoutFeedback} from 'react-native';
 import PrimaryButton from '../PrimaryButton';
 import colors from '../../styles/colors';
 import {icons} from '../icons';
@@ -7,7 +7,6 @@ import {
   TextInputWithBorderBottom,
   ModalContainer,
   ModalContent,
-  CloseIcon,
   ButtonsContainer,
   ErrorLength,
   Icon,
@@ -35,45 +34,33 @@ const SaveRecordingModal: React.FC<SaveRecordingModalProps> = ({
   addRecording,
   recordingInfo,
 }) => {
-  const {recordingName, setRecordingName} = useSaveRecordingModal({
-    onClose,
-    addRecording,
-  });
+  const {recordingName, setRecordingName, error, closeModal, handleSave} =
+    useSaveRecordingModal({
+      onClose,
+      addRecording,
+    });
 
   const {date, duration, fileSize} = recordingInfo;
 
-  const [error, setError] = useState<string>('');
-
-  const onSave = () => {
-    if (!recordingName) {
-      setError('O campo Nome é obrigatório.');
-      return;
-    }
-    setError('');
-    addRecording(recordingName);
-    onClose();
-  };
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={visible}
-      onRequestClose={onClose}>
+      onRequestClose={closeModal}>
       <ModalContainer>
         <ModalContent>
-          <Pressable onPress={onClose}>
-            <CloseIcon source={icons.closeicon} />
-          </Pressable>
           <TextInputWithBorderBottom
             placeholder="Nome"
             value={recordingName}
             onChangeText={setRecordingName}
             maxLength={24}
+            placeholderTextColor={colors.grey.s100}
           />
           {recordingName.length > 23 && (
             <ErrorLength>O nome do áudio não pode ser vazio.</ErrorLength>
           )}
-          {error ? <ErrorLength>{error}</ErrorLength> : null}
+          {error ? <ErrorLength>{error}</ErrorLength> : <Text>{''}</Text>}
           <InfoTitle>Informações</InfoTitle>
 
           <Title>Data da gravação:</Title>
@@ -95,12 +82,17 @@ const SaveRecordingModal: React.FC<SaveRecordingModalProps> = ({
           </InfosContainer>
 
           <ButtonsContainer>
-            <PrimaryButton title="Salvar" onPress={onSave} />
             <PrimaryButton
-              title="Excluír"
+              title="Salvar"
+              onPress={handleSave}
               backgroundColor={colors.grey.s100}
               textColor={colors.primary.s300}
-              onPress={onClose}
+            />
+            <PrimaryButton
+              title="Excluir"
+              backgroundColor={colors.inputBorder.s100}
+              textColor={colors.grey.s100}
+              onPress={closeModal}
             />
           </ButtonsContainer>
         </ModalContent>

@@ -151,10 +151,10 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     try {
       await audioRecorderPlayer.pauseRecorder();
       setIsPaused(true);
-      setText('Gravação pausada');
-      console.log('Gravação pausada ');
+      setText('Gravação em espera...');
+      console.log('Gravação em espera ');
     } catch (error) {
-      console.log('Falha ao pausar a gravação', error);
+      console.log('Falha ao pausar a gravação...', error);
     }
   };
 
