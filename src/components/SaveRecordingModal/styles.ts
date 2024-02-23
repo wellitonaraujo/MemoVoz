@@ -16,7 +16,7 @@ export const ModalContent = styled.View`
   background-color: ${colors.background};
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
-  padding: 20px;
+  padding: 16px;
   width: 100%;
   height: viewPortHeight / 1.8;
 `;
@@ -63,7 +63,7 @@ export const InfoTitle = styled.Text`
 
 export const InfosContainer = styled.View`
   flex-direction: row;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   align-items: center;
 `;
 

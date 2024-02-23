@@ -9,7 +9,7 @@ export const ButtonContainer = styled(TouchableOpacity)<{
   height: 50px;
   width: 100%;
   border-radius: 8px;
-  margin-top: 16px;
+  margin-top: 10px;
   justify-content: center;
   border-color: ${({borderColor}) => borderColor || colors.grey.s400};
   border-width: 1px;

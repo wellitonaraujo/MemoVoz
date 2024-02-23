@@ -52,7 +52,7 @@ export const Title = styled.Text`
 export const IconsContainer = styled.View`
   justify-content: space-between;
   flex-direction: row;
-  padding: ${RFValue(5)}px ${RFValue(16)}px ${RFValue(16)}px ${RFValue(16)}px;
+  padding: ${RFValue(5)}px ${RFValue(16)}px ${RFValue(10)}px ${RFValue(16)}px;
 `;
 
 export const InfoTitle = styled.Text`
