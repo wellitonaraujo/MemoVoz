@@ -31,12 +31,12 @@ export const InfosContainer = styled.View`
 export const Icon = styled.Image`
   height: ${RFValue(23)}px;
   width: ${RFValue(23)}px;
-  opacity: 0.6;
+  opacity: 1;
 `;
 
 export const ValueTitle = styled.Text`
   color: ${colors.grey.s200};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(14)}px;
   margin-left: ${RFValue(10)}px;
   letter-spacing: 1.5px;
   font-weight: 300;
@@ -44,7 +44,7 @@ export const ValueTitle = styled.Text`
 
 export const Title = styled.Text`
   color: ${colors.grey.s200};
-  font-size: ${RFValue(17)}px;
+  font-size: ${RFValue(15)}px;
   padding: ${RFValue(16)}px 0 ${RFValue(10)}px ${RFValue(16)}px;
   letter-spacing: 1.5px;
 `;
@@ -57,13 +57,13 @@ export const IconsContainer = styled.View`
 
 export const InfoTitle = styled.Text`
   color: ${colors.grey.s200};
-  font-size: ${RFValue(17)}px;
+  font-size: ${RFValue(16)}px;
   font-family: 'Poppins-Light';
   letter-spacing: 1.5px;
 `;
 
 export const Separator = styled.View`
   height: 1px;
-  background-color: ${colors.inputBorder.s100};
+  background-color: ${colors.inputSearch.s100};
   margin-vertical: ${RFValue(15)}px;
 `;

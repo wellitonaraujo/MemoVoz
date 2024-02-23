@@ -1,7 +1,7 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
-import {Dimensions} from 'react-native';
+import {Animated, Dimensions} from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -22,12 +22,12 @@ export const ListGroupTitle = styled.Text`
   padding: 20px 0 20px 0;
 `;
 
-export const Logo = styled.Image`
+export const Logo = styled(Animated.Image)`
   width: ${width * 0.3}px;
   height: ${height * 0.3}px;
   aspect-ratio: 1;
   align-self: center;
   margin-top: ${height * 0.25}px;
   position: relative;
-  opacity: 0.1;
+  opacity: 0.3;
 `;

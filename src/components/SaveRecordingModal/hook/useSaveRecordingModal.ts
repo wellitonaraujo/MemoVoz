@@ -12,6 +12,7 @@ const useSaveRecordingModal = ({
   const [visible, setVisible] = useState(false);
   const [recordingName, setRecordingName] = useState('');
   const [error, setError] = useState<string>('');
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const openModal = () => {
     setVisible(true);
@@ -20,18 +21,20 @@ const useSaveRecordingModal = ({
   const closeModal = () => {
     setVisible(false);
     setRecordingName('');
+    setIsEmpty(false);
     setError('');
     onClose();
   };
 
   const handleSave = () => {
     if (!recordingName) {
-      setError('Por favor, preencha o campo Nome.');
+      setIsEmpty(true);
       return;
     }
+
+    setIsEmpty(false);
     addRecording(recordingName);
     setRecordingName('');
-    setError('');
     closeModal();
   };
 
@@ -43,6 +46,8 @@ const useSaveRecordingModal = ({
     closeModal,
     handleSave,
     setRecordingName,
+    isEmpty,
+    setIsEmpty,
   };
 };
 

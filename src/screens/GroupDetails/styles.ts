@@ -18,7 +18,7 @@ export const Logo = styled.Image`
   height: ${height * 0.3}px;
   aspect-ratio: 1;
   align-self: center;
-  opacity: 0.1;
+  opacity: 0.3;
 `;
 
 export const RecordingContainer = styled.View`
@@ -69,11 +69,9 @@ export const ListGroupTitle = styled.Text`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(22)}px;
-  font-family: 'Poppins-Regular';
+  font-size: ${RFValue(18)}px;
   color: ${colors.grey.s200};
   align-self: center;
-  margin-top: ${height * 0.011}px;
 `;
 
 export const Description = styled.Text`
@@ -81,7 +79,7 @@ export const Description = styled.Text`
   font-family: 'Poppins-ExtraLight';
   color: ${colors.grey.s300};
   padding-top: 30px;
-  margin-bottom: 20px;
+  margin: 40px 0;
   align-self: center;
 `;
 
@@ -98,13 +96,13 @@ export const AudioPlayer = styled.View`
   color: ${colors.primary.s100};
   width: 100%;
   border-bottom-width: 0.4px;
-  border-bottom-color: ${colors.inputBorder.s100}; /* Cor da linha */
+  border-bottom-color: ${colors.inputSearch.s100}; /* Cor da linha */
 `;
 
 export const AudioName = styled.Text`
   flex: 1;
   color: ${colors.white};
-  font-size: 20px;
+  font-size: ${RFValue(15)}px;
   margin-left: 20px;
   font-family: 'Poppins-Light';
 `;

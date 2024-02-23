@@ -4,7 +4,7 @@ import colors from '../../styles/colors';
 import {Platform} from 'react-native';
 
 export const Container = styled.Pressable`
-  background-color: ${colors.inputBorder.s100};
+  background-color: ${colors.inputSearch.s100};
   flex-direction: row;
   align-items: center;
   border-radius: 15px;

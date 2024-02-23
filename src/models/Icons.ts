@@ -20,6 +20,7 @@ export interface Icons {
   pauseiconButon: ImageSourcePropType;
   menuIcon: ImageSourcePropType;
   shareIcon: ImageSourcePropType;
+  arrowbackIcon: ImageSourcePropType;
 }
 
 export interface InitialButtonProps {

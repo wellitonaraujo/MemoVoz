@@ -2,7 +2,6 @@ import {TextInput} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
 import {Dimensions, Image} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -16,11 +15,11 @@ export const Container = styled.View`
   padding: 0 8px;
   width: 100%;
   margin-bottom: 30px;
+  opacity: 0.5;
 `;
 
 export const StyledInput = styled(TextInput)`
-  font-size: ${RFValue(15)}px;
-  color: ${colors.grey.s200};
+  font-size: 16px;
   height: 48px;
   flex: 1;
 `;
@@ -31,8 +30,9 @@ export const PlaceholderText = styled.Text`
   top: 10px;
 `;
 
-export const SearchIcon = styled(Image)`
-  margin: 5px 5px;
-  height: 20px;
-  width: 20px;
+export const ArrowBackIcon = styled(Image)`
+  margin-top: 50px;
+  height: 30px;
+  width: 30px;
+  margin-left: 16px;
 `;
