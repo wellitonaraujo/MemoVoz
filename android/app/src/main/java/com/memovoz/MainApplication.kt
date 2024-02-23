@@ -11,7 +11,8 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
-import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage // Corrigido aqui
+import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage
+import com.zmxv.RNSound.RNSoundPackage
 
 class MainApplication : Application(), ReactApplication {
 
