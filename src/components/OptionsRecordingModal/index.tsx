@@ -44,8 +44,10 @@ const OptionsRecordingModal: React.FC<OptionsRecordingModalProps> = ({
   };
   const handleDelete = () => {
     deleteRecording(selectedIndex);
+    console.log('O item deletado foi: ', selectedIndex);
     onClose();
   };
+
   const {date, duration, fileSize} = recordingInfo;
   return (
     <Modal
