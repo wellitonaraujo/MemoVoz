@@ -28,13 +28,25 @@ const useRecording = (name: string) => {
   const [audioFilePath, setAudioFilePath] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalOptionsVisible, setModalOptionVisible] = useState(false);
-  const [selectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [recordingInfo, setRecordingInfo] = useState({
     date: '',
     duration: '',
     fileSize: '',
   });
 
+  const openOptionsModal = () => {
+    setModalOptionVisible(true);
+  };
+
+  const closeOptionsModal = () => {
+    setModalOptionVisible(false);
+  };
+
+  const handleSelectItem = (index: number) => {
+    setSelectedIndex(index);
+    openOptionsModal();
+  };
   const openModal = async () => {
     setModalVisible(true);
     const date = new Date().toLocaleString('pt-BR');
@@ -246,14 +258,6 @@ const useRecording = (name: string) => {
     openOptionsModal();
   };
 
-  const openOptionsModal = () => {
-    setModalOptionVisible(true);
-  };
-
-  const closeOptionsModal = () => {
-    setModalOptionVisible(false);
-  };
-
   return {
     recordedAudioFiles,
     tempAudioFilePath,
@@ -280,6 +284,7 @@ const useRecording = (name: string) => {
     closeOptionsModal,
     setCount,
     selectedIndex,
+    handleSelectItem,
   };
 };
 

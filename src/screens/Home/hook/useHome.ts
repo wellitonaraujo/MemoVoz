@@ -148,7 +148,7 @@ const useHome = ({navigation}: UseHomeProps) => {
       {
         rotate: rotation.interpolate({
           inputRange: [0, 1],
-          outputRange: ['180deg', '360deg'],
+          outputRange: ['120deg', '360deg'],
         }),
       },
     ],

@@ -59,9 +59,6 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     cancelRecording,
     addRecording,
     deleteRecording,
-    modalOptionsVisible,
-    closeOptionsModal,
-    optionsRecording,
     playRecording,
     stopRecording,
     modalVisible,
@@ -69,9 +66,12 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     isAudioPlaying,
     closeModal,
     recordingInfo,
+    handleSelectItem,
+    modalOptionsVisible,
     text,
     selectedIndex,
     setCount,
+    closeOptionsModal,
   } = useRecording(name);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -190,7 +190,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
               </Pressable>
               <AudioName>{audio.name}</AudioName>
 
-              <Pressable onPress={optionsRecording}>
+              <Pressable onPress={() => handleSelectItem(index)}>
                 <Icon source={icons.menuIcon} />
               </Pressable>
             </AudioPlayer>
