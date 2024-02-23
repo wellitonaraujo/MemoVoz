@@ -1,8 +1,8 @@
-import {Modal, Text, TouchableWithoutFeedback} from 'react-native';
 import PrimaryButton from '../PrimaryButton';
+import {Modal, Text} from 'react-native';
 import colors from '../../styles/colors';
 import {icons} from '../icons';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   TextInputWithBorderBottom,
   ModalContainer,

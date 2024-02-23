@@ -20,6 +20,7 @@ export const ButtonContainer = styled(TouchableOpacity)<{
 export const ButtonText = styled.Text<{textColor?: string}>`
   color: ${({textColor}) => textColor || colors.white};
   font-family: 'Poppins-Light';
+  letter-spacing: 1.5px;
   text-align: center;
   font-size: 16px;
 `;

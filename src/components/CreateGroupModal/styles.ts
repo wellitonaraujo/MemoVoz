@@ -14,7 +14,7 @@ export const ModalContent = styled.View`
   border-top-left-radius: 15px;
   padding: 16px;
   width: 100%;
-  height: 46%;
+  height: viewPortHeight / 1.8;
 `;
 
 export const CloseIcon = styled.Image`

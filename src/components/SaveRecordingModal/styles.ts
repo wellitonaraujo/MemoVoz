@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
+import {Dimensions} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+
+const {height: viewPortHeight} = Dimensions.get('window');
 
 export const ModalContainer = styled.View`
   flex: 1;
@@ -14,7 +18,7 @@ export const ModalContent = styled.View`
   border-top-left-radius: 15px;
   padding: 20px;
   width: 100%;
-  height: 70%;
+  height: viewPortHeight / 1.8;
 `;
 
 export const CloseIcon = styled.Image`
@@ -52,6 +56,7 @@ export const Icon = styled.Image`
 export const InfoTitle = styled.Text`
   color: ${colors.grey.s200};
   font-size: 22px;
+  letter-spacing: 1.5px;
   font-family: 'Poppins-Light';
   padding: 25px 0 25px 0;
 `;
@@ -64,12 +69,14 @@ export const InfosContainer = styled.View`
 
 export const Title = styled.Text`
   color: ${colors.grey.s200};
-  font-size: 19px;
+  font-size: ${RFValue(17)}px;
   margin-bottom: 8px;
+  letter-spacing: 1.5px;
 `;
 export const ValueTitle = styled.Text`
   color: ${colors.grey.s200};
   font-size: 18px;
-  font-family: 'Poppins-ExtraLight';
+  font-weight: 300;
+  letter-spacing: 1.5px;
   margin-left: 10px;
 `;
