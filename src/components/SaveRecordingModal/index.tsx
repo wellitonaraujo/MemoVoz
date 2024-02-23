@@ -61,7 +61,6 @@ const SaveRecordingModal: React.FC<SaveRecordingModalProps> = ({
             <ErrorLength>O nome do áudio não pode ser vazio.</ErrorLength>
           )}
           {error ? <ErrorLength>{error}</ErrorLength> : <Text>{''}</Text>}
-          <InfoTitle>Informações</InfoTitle>
 
           <Title>Data da gravação:</Title>
           <InfosContainer>

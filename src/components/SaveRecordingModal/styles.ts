@@ -36,7 +36,7 @@ export const TextInputWithBorderBottom = styled.TextInput`
   background-color: ${colors.inputBorder.s100};
   font-family: 'Poppins-ExtraLight';
   padding-left: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
   border-radius: 6px;
   font-size: 16px;
 `;
@@ -58,7 +58,7 @@ export const InfoTitle = styled.Text`
   font-size: 22px;
   letter-spacing: 1.5px;
   font-family: 'Poppins-Light';
-  padding: 25px 0 25px 0;
+  padding: 2px 0 20px 0;
 `;
 
 export const InfosContainer = styled.View`
