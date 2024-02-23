@@ -5,6 +5,8 @@ import {bytesToKiloBytes} from '../../../Utils/bytesToKiloBytes';
 import {formatTime} from '../../../Utils/formatTime';
 import {useState, useEffect} from 'react';
 import RNFS from 'react-native-fs';
+import {Platform} from 'react-native';
+import Sound from 'react-native-sound';
 
 type RecordedAudioFile = {
   name: string;
@@ -197,14 +199,40 @@ const useRecording = (name: string) => {
     }
   };
 
+  const getAudioDuration = async (audioPath: string) => {
+    try {
+      return new Promise<number>((resolve, reject) => {
+        const sound = new Sound(audioPath, '', error => {
+          if (error) {
+            console.log('Erro ao carregar o áudio:', error);
+            reject(error);
+            return;
+          }
+
+          // Obtém a duração do áudio em segundos
+          const audioDuration = sound.getDuration();
+          resolve(audioDuration);
+        });
+      });
+    } catch (error) {
+      console.log('Erro ao obter a duração do áudio:', error);
+      return null;
+    }
+  };
+
   const playRecording = async (audioPath: string) => {
     try {
-      if (currentPlayingAudioPath) {
-        await audioRecorderPlayer.stopPlayer();
+      const duration = await getAudioDuration(audioPath);
+      if (duration !== null) {
+        console.log('Duração do áudio:', duration);
+        await audioRecorderPlayer.startPlayer(audioPath);
+        setCurrentPlayingAudioPath(audioPath);
+        setIsAudioPlaying(true);
+
+        setTimeout(async () => {
+          await stopRecording();
+        }, duration * 1000);
       }
-      await audioRecorderPlayer.startPlayer(audioPath);
-      setCurrentPlayingAudioPath(audioPath);
-      setIsAudioPlaying(true);
     } catch (error) {
       console.log('Falha ao reproduzir o áudio', error);
     }
