@@ -1,7 +1,7 @@
 const colors = {
-  background: '#222831',
+  background: '#1A1A1A',
   primary: {
-    s300: '#242329',
+    s300: '#DB5D16',
     s200: '#93B1A6',
     s100: '#183D3D',
   },
@@ -25,8 +25,8 @@ const colors = {
     s200: '#B50000',
     s100: '#F8D7DA',
   },
-  inputBorder: {
-    s100: '#495A67',
+  inputSearch: {
+    s100: '#252526',
   },
 };
 

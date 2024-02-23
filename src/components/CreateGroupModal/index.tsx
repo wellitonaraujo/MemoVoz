@@ -31,8 +31,9 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
     handleSave,
     setGroupName,
     setGroupDescription,
-    error,
+    isEmpty,
     closeModal,
+    setIsEmpty,
   } = useCreateGroup({onClose, addGroupCard});
 
   return (
@@ -49,29 +50,37 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
               <TextInputWithBorderBottom
                 placeholder="Nome"
                 value={groupName}
-                onChangeText={setGroupName}
-                maxLength={24}
-                placeholderTextColor={colors.grey.s200}
+                onChangeText={text => {
+                  setGroupName(text);
+                  setIsEmpty(false);
+                }}
+                maxLength={28}
+                placeholderTextColor={colors.grey.s300}
+                style={
+                  isEmpty
+                    ? {borderColor: colors.error.s200, borderWidth: 1}
+                    : {borderColor: colors.inputSearch.s100, borderWidth: 1}
+                }
               />
-              {groupName.length > 23 && (
-                <ErrorLength>
-                  O nome do grupo não pode ter mais de 24 caracteres.
-                </ErrorLength>
+              {groupName.length > 27 ? (
+                <ErrorLength>Nome muito grande</ErrorLength>
+              ) : (
+                <Text>{''}</Text>
               )}
-              {error ? <ErrorLength>{error}</ErrorLength> : <Text>{''}</Text>}
+
               <TextAreaWithBorder
                 placeholder="Descrição"
                 multiline={false}
                 value={groupDescription}
                 onChangeText={setGroupDescription}
-                placeholderTextColor={colors.grey.s200}
+                placeholderTextColor={colors.grey.s300}
               />
               <ButtonsContainer>
                 <PrimaryButton
                   title="Salvar"
                   onPress={handleSave}
-                  backgroundColor={colors.grey.s100}
-                  textColor={colors.primary.s300}
+                  backgroundColor={colors.primary.s300}
+                  textColor={colors.white}
                 />
               </ButtonsContainer>
             </ModalContent>

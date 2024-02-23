@@ -24,6 +24,7 @@ const Home: React.FC<Props> = ({navigation}) => {
     handleSearch,
     filteredGroupCards,
     handleDelete,
+    rotateStyle,
   } = useHome({
     navigation,
   });
@@ -33,7 +34,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   return (
     <Container>
       <SearchInput placeholder="Buscar" onSearch={handleSearch} />
-      {!hasGroupCards && <Logo source={imgs.logo} />}
+      {!hasGroupCards && <Logo source={imgs.logo} style={[rotateStyle]} />}
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {hasGroupCards && <ListGroupTitle>Grupos</ListGroupTitle>}
@@ -52,7 +53,7 @@ const Home: React.FC<Props> = ({navigation}) => {
         <InitialButton
           icon={icons.createGroupIcon}
           onPress={handlePress}
-          backgroundColor={colors.white}
+          backgroundColor={colors.primary.s300}
         />
       </ButtonContainer>
 

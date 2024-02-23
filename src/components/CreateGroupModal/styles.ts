@@ -14,43 +14,27 @@ export const ModalContent = styled.View`
   border-top-left-radius: 15px;
   padding: 16px;
   width: 100%;
-  height: 46%;
-`;
-
-export const CloseIcon = styled.Image`
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  right: 0;
-  top: 0;
-`;
-
-export const CloseIconButon = styled.Pressable`
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  right: 0;
-  top: 0;
-  opacity: 1;
+  height: viewPortHeight / 1.8;
 `;
 
 export const TextInputWithBorderBottom = styled.TextInput`
-  background-color: ${colors.inputBorder.s100};
+  background-color: ${colors.inputSearch.s100};
+  color: ${colors.grey.s200};
   font-family: 'Poppins-ExtraLight';
   padding-left: 10px;
-  margin-top: 45px;
+  margin-top: 30px;
   border-radius: 6px;
   font-size: 16px;
 `;
 
 export const TextAreaWithBorder = styled.TextInput`
-  background-color: ${colors.inputBorder.s100};
+  background-color: ${colors.inputSearch.s100};
+  color: ${colors.grey.s200};
   font-family: 'Poppins-ExtraLight';
   text-align-vertical: top;
   padding-left: 10px;
-  margin-top: 25px;
+  margin-top: 20px;
   font-size: 16px;
-  opacity: 1;
   height: 130px;
   border-radius: 6px;
 `;
@@ -60,8 +44,7 @@ export const ButtonsContainer = styled.View`
 `;
 
 export const ErrorLength = styled.Text`
-  color: red;
-  font-size: 13px;
+  color: ${colors.error.s200};
 `;
 
 export const Title = styled.Text`

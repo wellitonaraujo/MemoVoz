@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 interface CreateGroupModalProps {
   onClose: () => void;
@@ -6,34 +6,36 @@ interface CreateGroupModalProps {
 }
 
 const useCreateGroup = ({onClose, addGroupCard}: CreateGroupModalProps) => {
+  const [groupDescription, setGroupDescription] = useState('');
   const [visible, setVisible] = useState(false);
   const [groupName, setGroupName] = useState('');
-  const [groupDescription, setGroupDescription] = useState('');
   const [error, setError] = useState<string>('');
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const openModal = () => {
     setVisible(true);
   };
 
   const closeModal = () => {
+    setGroupDescription('');
+    setIsEmpty(false);
     setVisible(false);
     setGroupName('');
-    setGroupDescription('');
-    onClose();
     setError('');
-    console.log(error);
+    onClose();
   };
 
   const handleSave = () => {
     if (!groupName) {
-      setError('Por favor, preencha o campo Nome.');
+      setIsEmpty(true);
       return;
     }
     if (groupName) {
       const newGroupCard = {name: groupName, description: groupDescription};
       addGroupCard(newGroupCard);
-      setGroupName('');
       setGroupDescription('');
+      setIsEmpty(false);
+      setGroupName('');
       closeModal();
     }
   };
@@ -48,6 +50,8 @@ const useCreateGroup = ({onClose, addGroupCard}: CreateGroupModalProps) => {
     handleSave,
     setGroupName,
     setGroupDescription,
+    setIsEmpty,
+    isEmpty,
   };
 };
 

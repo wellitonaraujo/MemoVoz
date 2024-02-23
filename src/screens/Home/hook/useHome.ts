@@ -1,6 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useState, useEffect} from 'react';
-import {Alert, PermissionsAndroid, Platform} from 'react-native';
+import {useState, useEffect, useRef} from 'react';
+import {
+  Alert,
+  Animated,
+  Easing,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import {
   PERMISSIONS,
   RESULTS,
@@ -120,6 +126,34 @@ const useHome = ({navigation}: UseHomeProps) => {
     groupCard.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  const rotation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const rotateAnimation = Animated.timing(rotation, {
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    });
+
+    rotateAnimation.start();
+
+    return () => {
+      rotateAnimation.stop();
+    };
+  }, [rotation]);
+
+  const rotateStyle = {
+    transform: [
+      {
+        rotate: rotation.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['180deg', '360deg'],
+        }),
+      },
+    ],
+  };
+
   return {
     modalVisible,
     handlePress,
@@ -133,6 +167,7 @@ const useHome = ({navigation}: UseHomeProps) => {
     filteredGroupCards,
     handleSearch,
     editGroup,
+    rotateStyle,
     groupCards: groupCards.filter(groupCard =>
       groupCard.name.toLowerCase().includes(searchTerm.toLowerCase()),
     ),

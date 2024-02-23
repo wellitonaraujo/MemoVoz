@@ -1,5 +1,11 @@
 import React from 'react';
-import {Share, Pressable, Modal, TouchableWithoutFeedback} from 'react-native';
+import {
+  Share,
+  Pressable,
+  Modal,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {
   Icon,
   IconsContainer,
@@ -10,6 +16,7 @@ import {
 } from './styles';
 import {icons} from '../icons';
 import {InfosContainer, ValueTitle} from './styles';
+import {InfosWrapper} from '../SaveRecordingModal/styles';
 
 interface OptionsRecordingModalProps {
   visible: boolean;
@@ -50,33 +57,36 @@ const OptionsRecordingModal: React.FC<OptionsRecordingModalProps> = ({
         <ModalContainer>
           <TouchableWithoutFeedback onPress={() => {}}>
             <ModalContent>
-              <Title>Data da gravação:</Title>
-              <InfosContainer>
-                <Icon source={icons.dateicon} />
-                <ValueTitle>{date}</ValueTitle>
-              </InfosContainer>
+              <InfosWrapper>
+                <Title>Data da gravação:</Title>
 
-              <Title>Duração:</Title>
-              <InfosContainer>
-                <Icon source={icons.clockicon} />
-                <ValueTitle>{duration}</ValueTitle>
-              </InfosContainer>
+                <InfosContainer>
+                  <Icon source={icons.dateicon} />
+                  <ValueTitle>{date}</ValueTitle>
+                </InfosContainer>
 
-              <Title>Tamanho do arquivo:</Title>
-              <InfosContainer>
-                <Icon source={icons.fileicon} />
-                <ValueTitle>{fileSize}</ValueTitle>
-              </InfosContainer>
-              <Separator />
-              <IconsContainer>
-                <Pressable onPress={handleDelete}>
-                  <Icon source={icons.trashicon} />
-                </Pressable>
+                <Title>Duração:</Title>
+                <InfosContainer>
+                  <Icon source={icons.clockicon} />
+                  <ValueTitle>{duration}</ValueTitle>
+                </InfosContainer>
 
-                <Pressable onPress={handleShare}>
-                  <Icon source={icons.shareIcon} />
-                </Pressable>
-              </IconsContainer>
+                <Title>Tamanho do arquivo:</Title>
+                <InfosContainer>
+                  <Icon source={icons.fileicon} />
+                  <ValueTitle>{fileSize}</ValueTitle>
+                </InfosContainer>
+                <Separator />
+                <IconsContainer>
+                  <Pressable onPress={handleDelete}>
+                    <Icon source={icons.trashicon} />
+                  </Pressable>
+
+                  <Pressable onPress={handleShare}>
+                    <Icon source={icons.shareIcon} />
+                  </Pressable>
+                </IconsContainer>
+              </InfosWrapper>
             </ModalContent>
           </TouchableWithoutFeedback>
         </ModalContainer>

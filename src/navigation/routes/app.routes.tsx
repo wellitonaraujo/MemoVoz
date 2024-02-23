@@ -6,6 +6,7 @@ import Home from '../../screens/Home';
 import React from 'react';
 import GroupDetails from '../../screens/GroupDetails';
 import colors from '../../styles/colors';
+import CustomBackButton from '../../components/CustomBackButton';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -42,6 +43,7 @@ const AppRoutes: React.FC = () => (
           headerTitle: '',
           headerBackTitleVisible: false,
           headerTintColor: colors.white,
+          headerLeft: () => <CustomBackButton />,
         }}
       />
     </Stack.Navigator>

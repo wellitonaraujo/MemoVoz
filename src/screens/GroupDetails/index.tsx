@@ -123,37 +123,11 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     };
   }, [isRecording, isPaused, pulseAnim, setCount]);
 
-  useEffect(() => {
-    const backAction = () => {
-      cancelRecording();
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => {
-      backHandler.remove();
-      cancelRecording();
-      stopRecording(); // Adicionando stopRecording aqui
-      console.log('Componente GroupDetails desmontado');
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const [audioUrl, setAudioUrl] = useState<string>('');
-
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Title>{name}</Title>
-        {!isRecording && (
-          <>
-            <Description>{description}</Description>
-          </>
-        )}
+        {!isRecording && <Description>{description}</Description>}
         {isRecording && (
           <>
             <RecordingCount>{formatTime(count)}</RecordingCount>
