@@ -1,13 +1,14 @@
 // GroupDetails.tsx
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import OptionsRecordingModal from '../../components/OptionsRecordingModal';
 import SaveRecordingModal from '../../components/SaveRecordingModal';
 import RecordingAnimation from '../../components/RecordingAnimation';
-import {Animated, BackHandler, Pressable} from 'react-native';
+import {GroupDetailsProps} from '../../models/GroupDetailsProps';
 import InitialButton from '../../components/InitialButton';
-import {StackScreenProps} from '@react-navigation/stack';
 import {formatTime} from '../../Utils/formatTime';
+import {Animated, Pressable} from 'react-native';
 import useRecording from './hook/useRecording';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {icons} from '../../components/icons';
 import colors from '../../styles/colors';
 import {imgs} from '../imgs';
@@ -27,26 +28,27 @@ import {
   Play,
   Icon,
 } from './styles';
-import OptionsRecordingModal from '../../components/OptionsRecordingModal';
-
-interface GroupDetailsProps {
-  navigation: GroupDetailsScreenProps;
-  route: {params: {groupId: string; name: string; description: string}};
-}
-
-type RootStackParamList = {
-  Home: undefined;
-  NewRecording: undefined;
-  GroupDetails: {name: string; description: string};
-};
-
-type GroupDetailsScreenProps = StackScreenProps<
-  RootStackParamList,
-  'GroupDetails'
->;
 
 const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   const {name, description} = route.params;
+
+  // const dispatch: ThunkDispatch<RootState, void, Action> = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(recordingActions.startRecording());
+  //   dispatch(recordingActions.resumeRecording());
+  //   dispatch(recordingActions.cancelRecording());
+  //   dispatch(recordingActions.addRecording({name: '', path: ''}));
+  //   dispatch(recordingActions.deleteRecording(0));
+  //   dispatch(recordingActions.playRecording(currentPlayingAudioPath));
+  //   dispatch(recordingActions.stopRecording());
+  //   dispatch(recordingActions.setModalVisible(true));
+  //   dispatch(recordingActions.setModalOptionVisible(true));
+  //   dispatch(recordingActions.setSelectedIndex(0));
+  //   dispatch(
+  //     recordingActions.setRecordingInfo({date: '', duration: '', fileSize: ''}),
+  //   );
+  // }, [dispatch]);
 
   const {
     recordedAudioFiles,
