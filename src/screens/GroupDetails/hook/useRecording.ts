@@ -46,10 +46,15 @@ const useRecording = (name: string) => {
   };
 
   const handleSelectItem = (index: number) => {
+    const selectedAudio = recordedAudioFiles[index];
     setSelectedIndex(index);
+    // Extrai o nome do arquivo de áudio do caminho
+    const audioFileName = selectedAudio.path.split('/').pop();
+    loadRecordingInfo(audioFileName);
     openOptionsModal();
   };
-  const openModal = async () => {
+
+  const saveRecordingModal = async () => {
     setModalVisible(true);
     const date = new Date().toLocaleString('pt-BR');
     const duration = formatTime(count);
@@ -61,9 +66,10 @@ const useRecording = (name: string) => {
         const fileSize = bytesToKiloBytes(fileStat.size);
         setRecordingInfo({date, duration, fileSize});
 
-        // Salvar informações de gravação no AsyncStorage
+        // Salvar informações de gravação no AsyncStorage usando o nome do arquivo como chave
+        const audioFileName = audioFilePath.split('/').pop(); // Extrai o nome do arquivo do caminho
         await AsyncStorage.setItem(
-          'recordingInfo',
+          `recordingInfo_${audioFileName}`,
           JSON.stringify({date, duration, fileSize}),
         );
       } else {
@@ -74,13 +80,27 @@ const useRecording = (name: string) => {
     }
   };
 
+  const loadRecordingInfo = async (audioFileName: string) => {
+    try {
+      const recordingInfoJSON = await AsyncStorage.getItem(
+        `recordingInfo_${audioFileName}`,
+      );
+      if (recordingInfoJSON) {
+        const recordingInfo = JSON.parse(recordingInfoJSON);
+        setRecordingInfo(recordingInfo);
+        console.log(recordingInfo);
+      }
+    } catch (error) {
+      console.log('Erro ao carregar as informações de gravação:', error);
+    }
+  };
+
   const closeModal = () => {
     setModalVisible(false);
   };
 
   const generateAudioFilePath = () => {
     const randomNumber = Math.floor(Math.random() * 1000) + 1;
-    console.log(randomNumber);
     return `${RNFS.DocumentDirectoryPath}/recording${randomNumber}.mp3`;
   };
 
@@ -140,7 +160,7 @@ const useRecording = (name: string) => {
 
   const cancelRecording = async () => {
     try {
-      openModal();
+      saveRecordingModal();
       await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
       setIsRecording(false);
@@ -265,22 +285,6 @@ const useRecording = (name: string) => {
 
     return () => {};
   }, [name]);
-
-  const loadRecordingInfo = async () => {
-    try {
-      const recordingInfoJSON = await AsyncStorage.getItem('recordingInfo');
-      if (recordingInfoJSON) {
-        const recordingInfo = JSON.parse(recordingInfoJSON);
-        setRecordingInfo(recordingInfo);
-      }
-    } catch (error) {
-      console.log('Erro ao carregar as informações de gravação:', error);
-    }
-  };
-
-  useEffect(() => {
-    loadRecordingInfo();
-  }, []);
 
   const optionsRecording = async () => {
     openOptionsModal();
