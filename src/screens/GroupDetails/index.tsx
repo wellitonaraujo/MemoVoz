@@ -55,14 +55,14 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     isRecording,
     isPaused,
     count,
-    startRecording,
-    pauseRecording,
-    resumeRecording,
-    cancelRecording,
+    startRecorder,
+    pauseRecorder,
+    resumeRecorder,
+    stopRecorder,
     addRecording,
     deleteRecording,
-    recordingPlay,
-    recordingStop,
+    startPlayer,
+    resumePlayer,
     modalVisible,
     currentPlayingAudioPath,
     isAudioPlaying,
@@ -74,8 +74,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     selectedIndex,
     setCount,
     closeOptionsModal,
-    recordingResume,
-    recordingPause,
+    pausePlayer,
   } = useRecording(name);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -127,6 +126,12 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     };
   }, [isRecording, isPaused, pulseAnim, setCount]);
 
+  useEffect(() => {
+    return () => {
+      stopRecorder();
+    };
+  }, []);
+
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -145,24 +150,24 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
             <RecordingContainer>
               {isRecording && !isPaused ? (
                 <>
-                  <TouchableOpacity onPress={pauseRecording}>
+                  <TouchableOpacity onPress={pauseRecorder}>
                     <RecordingButton source={icons.pauseicon} />
                   </TouchableOpacity>
-                  <Pressable onPress={cancelRecording}>
+                  <Pressable onPress={stopRecorder}>
                     <CancelButton source={icons.cancelicon} />
                   </Pressable>
                 </>
               ) : isPaused ? (
                 <>
-                  <TouchableOpacity onPress={resumeRecording}>
+                  <TouchableOpacity onPress={resumeRecorder}>
                     <RecordingButton source={icons.playicon} />
                   </TouchableOpacity>
-                  <Pressable onPress={cancelRecording}>
+                  <Pressable onPress={stopRecorder}>
                     <CancelButton source={icons.cancelicon} />
                   </Pressable>
                 </>
               ) : (
-                <TouchableOpacity onPress={startRecording}>
+                <TouchableOpacity onPress={startRecorder}>
                   <RecordingButton source={icons.recordingicon} />
                 </TouchableOpacity>
               )}
@@ -178,13 +183,13 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
                   if (currentPlayingAudioPath === audio.path) {
                     // Se o áudio atualmente em reprodução for o mesmo que o áudio clicado, pausa ou retoma a reprodução
                     if (isAudioPlaying) {
-                      recordingPause();
+                      pausePlayer();
                     } else {
-                      recordingResume();
+                      resumePlayer();
                     }
                   } else {
                     // Caso contrário, inicia a reprodução do áudio clicado
-                    recordingPlay(audio.path);
+                    startPlayer(audio.path);
                   }
                 }}>
                 <Play
@@ -208,7 +213,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
         <ButtonContainer>
           <InitialButton
             icon={icons.micRecordIcon}
-            onPress={startRecording}
+            onPress={startRecorder}
             backgroundColor={colors.red}
           />
         </ButtonContainer>

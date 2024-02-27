@@ -103,7 +103,7 @@ const useRecording = (name: string) => {
     return `${RNFS.DocumentDirectoryPath}/recording${randomNumber}.mp3`;
   };
 
-  const startRecording = async () => {
+  const startRecorder = async () => {
     try {
       const recordAudioPermission = await check(
         PERMISSIONS.ANDROID.RECORD_AUDIO,
@@ -123,7 +123,7 @@ const useRecording = (name: string) => {
       // Verifica se uma gravação está sendo reproduzida atualmente
       if (isAudioPlaying) {
         // Se sim, interrompe a reprodução atual antes de iniciar uma nova gravação
-        await recordingStop();
+        await stopPlayer();
       }
 
       const audioPath = generateAudioFilePath();
@@ -141,18 +141,18 @@ const useRecording = (name: string) => {
     }
   };
 
-  const pauseRecording = async () => {
+  const pauseRecorder = async () => {
     try {
-      if (isAudioPlaying) {
-        await audioRecorderPlayer.pausePlayer();
-        setIsAudioPlaying(false);
-      }
+      await audioRecorderPlayer.pauseRecorder();
+      setIsPaused(true);
+      setText('Gravação em espera...');
+      console.log('Gravação em espera ');
     } catch (error) {
-      console.log('Falha ao pausar a reprodução', error);
+      console.log('Falha ao pausar a gravação...', error);
     }
   };
 
-  const resumeRecording = async () => {
+  const resumeRecorder = async () => {
     try {
       await audioRecorderPlayer.resumeRecorder();
       setIsPaused(false);
@@ -163,7 +163,7 @@ const useRecording = (name: string) => {
     }
   };
 
-  const cancelRecording = async () => {
+  const stopRecorder = async () => {
     try {
       saveRecordingModal();
       await audioRecorderPlayer.stopRecorder();
@@ -212,7 +212,7 @@ const useRecording = (name: string) => {
     const updatedAudioFiles = [...recordedAudioFiles];
     updatedAudioFiles.splice(index, 1);
     setRecordedAudioFiles(updatedAudioFiles);
-    stopRecording();
+    recordingStop();
 
     try {
       await AsyncStorage.setItem(name, JSON.stringify(updatedAudioFiles));
@@ -245,7 +245,9 @@ const useRecording = (name: string) => {
     }
   };
 
-  const recordingPlay = async (audioPath: string) => {
+  // players
+
+  const startPlayer = async (audioPath: string) => {
     try {
       const duration = await getAudioDuration(audioPath);
       if (duration !== null) {
@@ -253,7 +255,7 @@ const useRecording = (name: string) => {
         // Verifica se há um áudio tocando atualmente
         if (isAudioPlaying && currentPlayingAudioPath !== audioPath) {
           // Se sim, para o áudio atual antes de iniciar um novo
-          await recordingStop();
+          await stopPlayer();
         }
         // Inicia a reprodução do novo áudio
         await audioRecorderPlayer.startPlayer(audioPath);
@@ -261,7 +263,7 @@ const useRecording = (name: string) => {
         setIsAudioPlaying(true);
 
         setTimeout(async () => {
-          await recordingStop();
+          await stopPlayer();
         }, duration * 1000);
       }
     } catch (error) {
@@ -269,7 +271,7 @@ const useRecording = (name: string) => {
     }
   };
 
-  const recordingPause = async () => {
+  const pausePlayer = async () => {
     try {
       if (isAudioPlaying) {
         await audioRecorderPlayer.pausePlayer();
@@ -280,7 +282,7 @@ const useRecording = (name: string) => {
     }
   };
 
-  const recordingResume = async () => {
+  const resumePlayer = async () => {
     try {
       if (!isAudioPlaying) {
         await audioRecorderPlayer.resumePlayer();
@@ -291,7 +293,7 @@ const useRecording = (name: string) => {
     }
   };
 
-  const recordingStop = async () => {
+  const stopPlayer = async () => {
     try {
       await audioRecorderPlayer.stopPlayer();
       setCurrentPlayingAudioPath('');
@@ -335,14 +337,14 @@ const useRecording = (name: string) => {
     audioFilePath,
     recordingInfo,
     optionsRecording,
-    startRecording,
-    pauseRecording,
-    resumeRecording,
-    cancelRecording,
+    startRecorder,
+    pauseRecorder,
+    resumeRecorder,
+    stopRecorder,
     addRecording,
     deleteRecording,
-    recordingPlay,
-    recordingStop,
+    startPlayer,
+    stopPlayer,
     modalVisible,
     modalOptionsVisible,
     closeModal,
@@ -350,8 +352,8 @@ const useRecording = (name: string) => {
     setCount,
     selectedIndex,
     handleSelectItem,
-    recordingResume,
-    recordingPause,
+    resumePlayer,
+    pausePlayer,
   };
 };
 
