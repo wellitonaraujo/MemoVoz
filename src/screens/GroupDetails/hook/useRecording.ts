@@ -212,10 +212,11 @@ const useRecording = (name: string) => {
     const updatedAudioFiles = [...recordedAudioFiles];
     updatedAudioFiles.splice(index, 1);
     setRecordedAudioFiles(updatedAudioFiles);
-    recordingStop();
+    stopRecorder();
 
     try {
       await AsyncStorage.setItem(name, JSON.stringify(updatedAudioFiles));
+      setModalVisible(false);
     } catch (error) {
       console.error(
         'Erro ao excluir o arquivo de áudio do AsyncStorage:',
@@ -251,7 +252,6 @@ const useRecording = (name: string) => {
     try {
       const duration = await getAudioDuration(audioPath);
       if (duration !== null) {
-        console.log('Duração do áudio:', duration);
         // Verifica se há um áudio tocando atualmente
         if (isAudioPlaying && currentPlayingAudioPath !== audioPath) {
           // Se sim, para o áudio atual antes de iniciar um novo
@@ -261,7 +261,7 @@ const useRecording = (name: string) => {
         await audioRecorderPlayer.startPlayer(audioPath);
         setCurrentPlayingAudioPath(audioPath);
         setIsAudioPlaying(true);
-
+        console.log('Iniciando reprodução');
         setTimeout(async () => {
           await stopPlayer();
         }, duration * 1000);
@@ -298,6 +298,7 @@ const useRecording = (name: string) => {
       await audioRecorderPlayer.stopPlayer();
       setCurrentPlayingAudioPath('');
       setIsAudioPlaying(false);
+      console.log('Parando reprodução');
     } catch (error) {
       console.log('Falha ao parar o áudio', error);
     }
@@ -324,6 +325,16 @@ const useRecording = (name: string) => {
   const optionsRecording = async () => {
     openOptionsModal();
   };
+
+  useEffect(() => {
+    return () => {
+      // Limpeza: Pare o áudio se estiver tocando
+      if (isAudioPlaying) {
+        stopPlayer();
+      }
+      // Remova ouvintes de eventos ou outras limpezas necessárias
+    };
+  }, []);
 
   return {
     recordedAudioFiles,

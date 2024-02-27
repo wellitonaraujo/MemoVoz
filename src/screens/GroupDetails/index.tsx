@@ -28,6 +28,7 @@ import {
   Play,
   Icon,
 } from './styles';
+import {useIsFocused} from '@react-navigation/native';
 
 const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   const {name, description} = route.params;
@@ -62,6 +63,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     addRecording,
     deleteRecording,
     startPlayer,
+    stopPlayer,
     resumePlayer,
     modalVisible,
     currentPlayingAudioPath,
@@ -130,6 +132,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     return () => {
       stopRecorder();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
