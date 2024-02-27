@@ -61,8 +61,8 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     cancelRecording,
     addRecording,
     deleteRecording,
-    playRecording,
-    stopRecording,
+    recordingPlay,
+    recordingStop,
     modalVisible,
     currentPlayingAudioPath,
     isAudioPlaying,
@@ -74,6 +74,8 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     selectedIndex,
     setCount,
     closeOptionsModal,
+    recordingResume,
+    recordingPause,
   } = useRecording(name);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -168,18 +170,21 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
           </>
         )}
 
-        {/* Listar gravações existentes apenas se não estiver gravando */}
         {!isRecording &&
           recordedAudioFiles.map((audio, index) => (
             <AudioPlayer key={index}>
               <Pressable
                 onPress={() => {
                   if (currentPlayingAudioPath === audio.path) {
-                    // Se o áudio atualmente em reprodução for o mesmo que o áudio clicado, parar a reprodução
-                    stopRecording();
+                    // Se o áudio atualmente em reprodução for o mesmo que o áudio clicado, pausa ou retoma a reprodução
+                    if (isAudioPlaying) {
+                      recordingPause();
+                    } else {
+                      recordingResume();
+                    }
                   } else {
-                    // Caso contrário, iniciar a reprodução do áudio clicado
-                    playRecording(audio.path);
+                    // Caso contrário, inicia a reprodução do áudio clicado
+                    recordingPlay(audio.path);
                   }
                 }}>
                 <Play

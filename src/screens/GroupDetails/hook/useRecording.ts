@@ -4,9 +4,8 @@ import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import {bytesToKiloBytes} from '../../../Utils/bytesToKiloBytes';
 import {formatTime} from '../../../Utils/formatTime';
 import {useState, useEffect} from 'react';
-import RNFS from 'react-native-fs';
-import {Platform} from 'react-native';
 import Sound from 'react-native-sound';
+import RNFS from 'react-native-fs';
 
 type RecordedAudioFile = {
   name: string;
@@ -121,6 +120,12 @@ const useRecording = (name: string) => {
         }
       }
 
+      // Verifica se uma gravação está sendo reproduzida atualmente
+      if (isAudioPlaying) {
+        // Se sim, interrompe a reprodução atual antes de iniciar uma nova gravação
+        await recordingStop();
+      }
+
       const audioPath = generateAudioFilePath();
       await audioRecorderPlayer.startRecorder(audioPath);
 
@@ -138,12 +143,12 @@ const useRecording = (name: string) => {
 
   const pauseRecording = async () => {
     try {
-      await audioRecorderPlayer.pauseRecorder();
-      setIsPaused(true);
-      setText('Gravação em espera...');
-      console.log('Gravação em espera ');
+      if (isAudioPlaying) {
+        await audioRecorderPlayer.pausePlayer();
+        setIsAudioPlaying(false);
+      }
     } catch (error) {
-      console.log('Falha ao pausar a gravação...', error);
+      console.log('Falha ao pausar a reprodução', error);
     }
   };
 
@@ -240,17 +245,23 @@ const useRecording = (name: string) => {
     }
   };
 
-  const playRecording = async (audioPath: string) => {
+  const recordingPlay = async (audioPath: string) => {
     try {
       const duration = await getAudioDuration(audioPath);
       if (duration !== null) {
         console.log('Duração do áudio:', duration);
+        // Verifica se há um áudio tocando atualmente
+        if (isAudioPlaying && currentPlayingAudioPath !== audioPath) {
+          // Se sim, para o áudio atual antes de iniciar um novo
+          await recordingStop();
+        }
+        // Inicia a reprodução do novo áudio
         await audioRecorderPlayer.startPlayer(audioPath);
         setCurrentPlayingAudioPath(audioPath);
         setIsAudioPlaying(true);
 
         setTimeout(async () => {
-          await stopRecording();
+          await recordingStop();
         }, duration * 1000);
       }
     } catch (error) {
@@ -258,7 +269,29 @@ const useRecording = (name: string) => {
     }
   };
 
-  const stopRecording = async () => {
+  const recordingPause = async () => {
+    try {
+      if (isAudioPlaying) {
+        await audioRecorderPlayer.pausePlayer();
+        setIsAudioPlaying(false);
+      }
+    } catch (error) {
+      console.log('Falha ao pausar a reprodução', error);
+    }
+  };
+
+  const recordingResume = async () => {
+    try {
+      if (!isAudioPlaying) {
+        await audioRecorderPlayer.resumePlayer();
+        setIsAudioPlaying(true);
+      }
+    } catch (error) {
+      console.log('Falha ao retomar a reprodução', error);
+    }
+  };
+
+  const recordingStop = async () => {
     try {
       await audioRecorderPlayer.stopPlayer();
       setCurrentPlayingAudioPath('');
@@ -308,8 +341,8 @@ const useRecording = (name: string) => {
     cancelRecording,
     addRecording,
     deleteRecording,
-    playRecording,
-    stopRecording,
+    recordingPlay,
+    recordingStop,
     modalVisible,
     modalOptionsVisible,
     closeModal,
@@ -317,6 +350,8 @@ const useRecording = (name: string) => {
     setCount,
     selectedIndex,
     handleSelectItem,
+    recordingResume,
+    recordingPause,
   };
 };
 
