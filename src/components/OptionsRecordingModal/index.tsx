@@ -1,34 +1,17 @@
+import {OptionsRecordingModalProps} from '../../models/OptionsRecordingModalProps';
+import {Share, Pressable, Modal, TouchableWithoutFeedback} from 'react-native';
+import {InfosWrapper} from '../SaveRecordingModal/styles';
+import {InfosContainer, ValueTitle} from './styles';
+import {icons} from '../icons';
 import React from 'react';
 import {
-  Share,
-  Pressable,
-  Modal,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import {
-  Icon,
   IconsContainer,
   ModalContainer,
   ModalContent,
   Separator,
   Title,
+  Icon,
 } from './styles';
-import {icons} from '../icons';
-import {InfosContainer, ValueTitle} from './styles';
-import {InfosWrapper} from '../SaveRecordingModal/styles';
-
-interface OptionsRecordingModalProps {
-  visible: boolean;
-  onClose: () => void;
-  deleteRecording: (index: number) => void;
-  selectedIndex: number;
-  recordingInfo: {
-    date: string;
-    duration: string;
-    fileSize: string;
-  };
-}
 
 const OptionsRecordingModal: React.FC<OptionsRecordingModalProps> = ({
   visible,
@@ -44,11 +27,11 @@ const OptionsRecordingModal: React.FC<OptionsRecordingModalProps> = ({
   };
   const handleDelete = () => {
     deleteRecording(selectedIndex);
-    console.log('O item deletado foi: ', selectedIndex);
     onClose();
   };
 
   const {date, duration, fileSize} = recordingInfo;
+
   return (
     <Modal
       animationType="slide"

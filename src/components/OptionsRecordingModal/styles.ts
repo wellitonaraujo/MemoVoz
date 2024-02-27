@@ -53,6 +53,7 @@ export const IconsContainer = styled.View`
   justify-content: space-between;
   flex-direction: row;
   padding: ${RFValue(5)}px ${RFValue(16)}px ${RFValue(10)}px ${RFValue(16)}px;
+  margin: 10px 0;
 `;
 
 export const InfoTitle = styled.Text`
@@ -66,4 +67,5 @@ export const Separator = styled.View`
   height: 1px;
   background-color: ${colors.inputSearch.s100};
   margin-vertical: ${RFValue(15)}px;
+  margin: 0;
 `;

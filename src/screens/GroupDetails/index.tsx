@@ -28,6 +28,7 @@ import {
   Play,
   Icon,
 } from './styles';
+import {useIsFocused} from '@react-navigation/native';
 
 const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   const {name, description} = route.params;
@@ -55,14 +56,15 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     isRecording,
     isPaused,
     count,
-    startRecording,
-    pauseRecording,
-    resumeRecording,
-    cancelRecording,
+    startRecorder,
+    pauseRecorder,
+    resumeRecorder,
+    stopRecorder,
     addRecording,
     deleteRecording,
-    playRecording,
-    stopRecording,
+    startPlayer,
+    stopPlayer,
+    resumePlayer,
     modalVisible,
     currentPlayingAudioPath,
     isAudioPlaying,
@@ -74,6 +76,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     selectedIndex,
     setCount,
     closeOptionsModal,
+    pausePlayer,
   } = useRecording(name);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -125,6 +128,13 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     };
   }, [isRecording, isPaused, pulseAnim, setCount]);
 
+  useEffect(() => {
+    return () => {
+      stopRecorder();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -143,24 +153,24 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
             <RecordingContainer>
               {isRecording && !isPaused ? (
                 <>
-                  <TouchableOpacity onPress={pauseRecording}>
+                  <TouchableOpacity onPress={pauseRecorder}>
                     <RecordingButton source={icons.pauseicon} />
                   </TouchableOpacity>
-                  <Pressable onPress={cancelRecording}>
+                  <Pressable onPress={stopRecorder}>
                     <CancelButton source={icons.cancelicon} />
                   </Pressable>
                 </>
               ) : isPaused ? (
                 <>
-                  <TouchableOpacity onPress={resumeRecording}>
+                  <TouchableOpacity onPress={resumeRecorder}>
                     <RecordingButton source={icons.playicon} />
                   </TouchableOpacity>
-                  <Pressable onPress={cancelRecording}>
+                  <Pressable onPress={stopRecorder}>
                     <CancelButton source={icons.cancelicon} />
                   </Pressable>
                 </>
               ) : (
-                <TouchableOpacity onPress={startRecording}>
+                <TouchableOpacity onPress={startRecorder}>
                   <RecordingButton source={icons.recordingicon} />
                 </TouchableOpacity>
               )}
@@ -168,18 +178,21 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
           </>
         )}
 
-        {/* Listar gravações existentes apenas se não estiver gravando */}
         {!isRecording &&
           recordedAudioFiles.map((audio, index) => (
             <AudioPlayer key={index}>
               <Pressable
                 onPress={() => {
                   if (currentPlayingAudioPath === audio.path) {
-                    // Se o áudio atualmente em reprodução for o mesmo que o áudio clicado, parar a reprodução
-                    stopRecording();
+                    // Se o áudio atualmente em reprodução for o mesmo que o áudio clicado, pausa ou retoma a reprodução
+                    if (isAudioPlaying) {
+                      pausePlayer();
+                    } else {
+                      resumePlayer();
+                    }
                   } else {
-                    // Caso contrário, iniciar a reprodução do áudio clicado
-                    playRecording(audio.path);
+                    // Caso contrário, inicia a reprodução do áudio clicado
+                    startPlayer(audio.path);
                   }
                 }}>
                 <Play
@@ -203,7 +216,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
         <ButtonContainer>
           <InitialButton
             icon={icons.micRecordIcon}
-            onPress={startRecording}
+            onPress={startRecorder}
             backgroundColor={colors.red}
           />
         </ButtonContainer>
