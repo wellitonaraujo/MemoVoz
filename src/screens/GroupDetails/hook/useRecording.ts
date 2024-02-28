@@ -5,7 +5,9 @@ import {bytesToKiloBytes} from '../../../Utils/bytesToKiloBytes';
 import {formatTime} from '../../../Utils/formatTime';
 import {useState, useEffect} from 'react';
 import Sound from 'react-native-sound';
+import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
+import {generateAudioFilePath} from '../../../Utils/generateAudioFilePath';
 
 type RecordedAudioFile = {
   name: string;
@@ -96,11 +98,6 @@ const useRecording = (name: string) => {
 
   const closeModal = () => {
     setModalVisible(false);
-  };
-
-  const generateAudioFilePath = () => {
-    const randomNumber = Math.floor(Math.random() * 1000) + 1;
-    return `${RNFS.DocumentDirectoryPath}/recording${randomNumber}.mp3`;
   };
 
   const startRecorder = async () => {
@@ -251,6 +248,7 @@ const useRecording = (name: string) => {
   const startPlayer = async (audioPath: string) => {
     try {
       const duration = await getAudioDuration(audioPath);
+      console.log(duration);
       if (duration !== null) {
         // Verifica se há um áudio tocando atualmente
         if (isAudioPlaying && currentPlayingAudioPath !== audioPath) {
@@ -334,7 +332,23 @@ const useRecording = (name: string) => {
       }
       // Remova ouvintes de eventos ou outras limpezas necessárias
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleShare = () => {
+    const audioPath = generateAudioFilePath();
+    console.log(audioPath);
+
+    const shareOptions = {
+      url: `file://${audioPath}`,
+      type: 'audio/mp3',
+    };
+
+    // Compartilha o áudio
+    Share.open(shareOptions)
+      .then(res => console.log('Compartilhamento realizado com sucesso:', res))
+      .catch(err => console.log('Erro ao compartilhar:', err));
+  };
 
   return {
     recordedAudioFiles,
@@ -365,6 +379,8 @@ const useRecording = (name: string) => {
     handleSelectItem,
     resumePlayer,
     pausePlayer,
+    handleShare,
+    getAudioDuration,
   };
 };
 

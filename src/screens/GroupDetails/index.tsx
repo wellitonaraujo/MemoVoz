@@ -28,7 +28,6 @@ import {
   Play,
   Icon,
 } from './styles';
-import {useIsFocused} from '@react-navigation/native';
 
 const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
   const {name, description} = route.params;
@@ -77,6 +76,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
     setCount,
     closeOptionsModal,
     pausePlayer,
+    handleShare,
   } = useRecording(name);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -228,6 +228,7 @@ const GroupDetails: React.FC<GroupDetailsProps> = ({route}) => {
         deleteRecording={deleteRecording}
         selectedIndex={selectedIndex}
         recordingInfo={recordingInfo}
+        onShare={handleShare}
       />
 
       <SaveRecordingModal
