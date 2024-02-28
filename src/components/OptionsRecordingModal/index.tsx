@@ -19,12 +19,8 @@ const OptionsRecordingModal: React.FC<OptionsRecordingModalProps> = ({
   deleteRecording,
   selectedIndex,
   recordingInfo,
+  onShare,
 }) => {
-  const handleShare = () => {
-    Share.share({
-      message: 'Ouça esse áudio!',
-    });
-  };
   const handleDelete = () => {
     deleteRecording(selectedIndex);
     onClose();
@@ -67,9 +63,9 @@ const OptionsRecordingModal: React.FC<OptionsRecordingModalProps> = ({
                     <Icon source={icons.trashicon} />
                   </Pressable>
 
-                  <Pressable onPress={handleShare}>
+                  {/* <Pressable onPress={onShare}>
                     <Icon source={icons.shareIcon} />
-                  </Pressable>
+                  </Pressable> */}
                 </IconsContainer>
               </InfosWrapper>
             </ModalContent>
